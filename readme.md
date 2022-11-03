@@ -9,9 +9,12 @@ This sub-folder consists the code for the original version of Connector.
 
 ## Build
 
-Using npm (may need to adjust the script definition to drop the build files into the
-appropriate directory for nodeGame)
-* npm run deploy
+Using npm build script will copy to the ./dist directory
+* npm run build
+
+## Deploy
+
+* Copy the game directory after the build from the ./dist to the /games directory of the nodegame install
 
 ## Developer Notes
 
