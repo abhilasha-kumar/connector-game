@@ -15,6 +15,104 @@
  * ---
  */
 
+
+ var board0 = ["SMELL","FAMILY","BLOW","AMP","TANK","BIRTHDAY","PUNISHMENT","HELICOPTER","BLAME",
+        "FIB","EYES","WEEP","THIRST","FOLLOWER","ANTIDOTE","PIE","BLAZE","LEAP","DATE","NAVY"];
+var board1 = ["BENCH","GLOW","SUNNY","IDIOT","QUICK","ANALYZE","BEAM","CAVE","OAK","RED","ROBIN",
+    "TREE","FIRM","CUT","RUN","KNIGHT","TRIM","SITE","BIRD","MONTH"];
+var board2 = ["PLANT","LACE","TIP","TENT","ARROW","POST","SUN","SILVER","ABOVE","BLUE","HOST","LOOSE",
+    "GOLD","STERN","CUP","WIND","BOWL","LUNCH","BELOW","BOW"];
+var board3 = ["MILD","SHINE","GRAY","GUMS","LUCK","PAPER","RUDE","LANE","HOLY","ROAD","JAM","HAMMER",
+    "REGRET","CHIP","TEETH","FAIRY","TINY","TOOL","BULB","KIND"];
+var board4 = ["GUN","HALO","JUMP","GIVE","HOPE","TRAVEL","POORnode.game.settings","DREAM","SPOON","GLUE","ANGEL","WEAK",
+    "LEAP","CHIEF","ANKLE","PASTE","USUAL","BET","PATH","FORK"];
+var board5 = ["TIGER","EXAM","BUN","TRACE","HAND","STORM","SNAKE","ALARM","BEAR","HOUSE","BIRTH","TEST",
+    "DEAD","FRESH","ALIVE","TOWER","PORK","ASH","LION","HELL"];
+var board6 = ["SIT","PINE","WHITE","IDEAL","CRUST","FLOUR","ROCK","LEMON","ELM","FOUND","RIVER","LOST",
+    "FLAT","CHAIN","FILL","STAND","TEAR","EXACT","BOOT","CLEVER"];
+var board7 = ["HEAVY","EAST","WOOD","DIM","NEW","GLASS","HEART","FULL","TIMBER","LOVE","SOFT","METER",
+    "EMPTY","HARD","OLD","CAGE","WORN","KITCHEN","SHORT","BOOTS"];
+var board8 = ["PEN","LAND","ICING","HAPPY","HORN","DRUM","FLOOR","RIDE","TALL","GIANT","RURAL","FINE",
+    "TILE","STYLE","CAKE","SUGAR","ARMY","SAD","SUBTLE","ACRE"];
+var board9 = ["MALE","HAPPEN","KING","CANDLE","TOE","HAMMOCK","SILLY","TRAUMA","RAGE","WEIRD","REAL",
+    "SLEEP","FLY","WICK","GUEST","ANGER","OLIVE","SKIRT","SORE","LAYER"];
+var board10 = ["FEET","CHAIR","FIRE","SHIP","LATE","LIST","GAS","DUNE","SAND","BOSS","TABLE","RING",
+    "BLAZE","GARAGE","CHAPEL","EARLY","PURE","DOPE","AWARE","BONE"];
+var board11 = ["BEE","CAMEL","SOUR","DAY","MOVE","HELP","JOKE","COAL","SAME","HONEY","SIN","HALF",
+    "CORAL","NIGHT","ASSIST","PET","ENVY","LAUGH","WASH","TOAD"];
+var board12 = ["TULIP","ZONE","CHALK","FIST","SAFE","PRISON","PAIN","MOVIE","SMILE","PINK","GRASP",
+    "TERM","AGONY","LEGAL","BEND","FILM","PAIL","var board","FLOWER","RUBY"];
+var board13 = ["ROPE","FOLLOW","PONY","SOLID","TEXT","KNIFE","EAR","BLADE","TEA","SLOW","ART","LEAD",
+    "DARE","GIRL","WEST","BOOK","BASE","HORSE","STAB","BOY"];
+var board14 = ["TUNA","WET","FLOAT","APPLE","FALL","DUSK","BOX","TALE","SIREN","WALK","EVIL","TOY",
+    "DAWN","SUIT","DRY","COLD","LOCAL","DIRTY","HOT","LIAR"];
+var board15 = ["HILL","ZOO","TROUT","SALT","SOUTH","CLOTH","FORT","ROW","FISH","BOAT","PLANE","FOUL",
+    "ANIMAL","BUTTER","BARK","MAD","ROUGH","PEPPER","GOAL","DAMN"];
+var board16 = ["KNOB","ERROR","FLUID","CRIB","PROOF","RETURN","WIDE","PLUM","POWER","LIGHT","BABY",
+    "PIER","WORRY","WORKER","DOOR","SMALL","POET","SOBER","LAMP","TASK"];
+var board17 = ["TOUGH","KEY","WORST","WAG","BADGE","SOIL","WARM","SHELF","WRITE","CART","GIFT","THREAD",
+    "ANGLE","BEST","WOOL","DIRT","TAIL","SAGE","TREAT","SKILL"];
+var board18 = ["CREDIT","FROG","MOLE","JUNK","LEASE","GAME","VINE","SHOP","GRAPE","JUICE","SPELL",
+    "SPIDER","OAR","JOIN","SKY","CROAK","WRONG","TAN","CARD","FUSE"];
+
+var pair0 = ["BLOW","BLAZE"];
+var pair1 = ["SMELL","EYES"];
+var pair2 = ["WEEP","FAMILY"];
+var pair3 = ["QUICK","GLOW"];
+var pair4 = ["TREE","OAK"];
+var pair5 = ["CAVE","KNIGHT"];
+var pair6 = ["GOLD","SILVER"];
+var pair7 = ["SUN","BOWL"];
+var pair8 = ["STERN","WIND"];
+var pair9 = ["TEETH","GUMS"];
+var pair10 = ["HOLY","KIND"];
+var pair11 = ["RUDE","REGRET"];
+var pair12 = ["JUMP","LEAP"];
+var pair13 = ["DREAM","BET"];
+var pair14 = ["TRAVEL","ANKLE"];
+var pair15 = ["SNAKE","ASH"];
+var pair16 = ["LION","TIGER"];
+var pair17 = ["HAND","BIRTH"];
+var pair18 = ["SIT","STAND"];
+var pair19 = ["CRUST","BOOT"];
+var pair20 = ["ELM","ROCK"];
+var pair21 = ["OLD","NEW"];
+var pair22 = ["GLASS","CAGE"];
+var pair23 = ["EAST","SHORT"];
+var pair24 = ["HAPPY","SAD"];
+var pair25 = ["ARMY","DRUM"];
+var pair26 = ["GIANT","SUBTLE"];
+var pair27 = ["CANDLE","WICK"];
+var pair28 = ["OLIVE","REAL"];
+var pair29 = ["WEIRD","TRAUMA"];
+var pair30 = ["FEET","CHAPEL"];
+var pair31 = ["CHAIR","TABLE"];
+var pair32 = ["GARAGE","BONE"];
+var pair33 = ["BEE","HONEY"];
+var pair34 = ["CAMEL","COAL"];
+var pair35 = ["SOUR","ENVY"];
+var pair36 = ["GRASP","PAIL"];
+var pair37 = ["MOVIE","FILM"];
+var pair38 = ["RUBY","SAFE"];
+var pair39 = ["KNIFE","STAB"];
+var pair40 = ["SLOW","SOLID"];
+var pair41 = ["BLADE","BASE"];
+var pair42 = ["WET","DRY"];
+var pair43 = ["LOCAL","TOY"];
+var pair44 = ["SIREN","BOX"];
+var pair45 = ["FISH","TROUT"];
+var pair46 = ["PLANE","GOAL"];
+var pair47 = ["BUTTER","FOUL"];
+var pair48 = ["SOBER","WIDE"];
+var pair49 = ["DOOR","KNOB"];
+var pair50 = ["ERROR","POET"];
+var pair51 = ["DIRT","SOIL"];
+var pair52 = ["SHELF","ANGLE"];
+var pair53 = ["BADGE","TREAT"];
+var pair54 = ["FROG","CROAK"];
+var pair55 = ["JUICE","JUNK"];
+var pair56 = ["SPIDER","JOIN"];
+
 module.exports = {
 
     // Variables shared by all treatments.
@@ -57,115 +155,18 @@ module.exports = {
     // cheating, re-set the dictator's offer to this value.
     defaultOffer: 100,
 
-    board0: ["SMELL","FAMILY","BLOW","AMP","TANK","BIRTHDAY","PUNISHMENT","HELICOPTER","BLAME",
-        "FIB","EYES","WEEP","THIRST","FOLLOWER","ANTIDOTE","PIE","BLAZE","LEAP","DATE","NAVY"],
-    board1: ["BENCH","GLOW","SUNNY","IDIOT","QUICK","ANALYZE","BEAM","CAVE","OAK","RED","ROBIN",
-        "TREE","FIRM","CUT","RUN","KNIGHT","TRIM","SITE","BIRD","MONTH"],
-    board2: ["PLANT","LACE","TIP","TENT","ARROW","POST","SUN","SILVER","ABOVE","BLUE","HOST","LOOSE",
-        "GOLD","STERN","CUP","WIND","BOWL","LUNCH","BELOW","BOW"],
-    board3: ["MILD","SHINE","GRAY","GUMS","LUCK","PAPER","RUDE","LANE","HOLY","ROAD","JAM","HAMMER",
-        "REGRET","CHIP","TEETH","FAIRY","TINY","TOOL","BULB","KIND"],
-    board4: ["GUN","HALO","JUMP","GIVE","HOPE","TRAVEL","POOR","DREAM","SPOON","GLUE","ANGEL","WEAK",
-        "LEAP","CHIEF","ANKLE","PASTE","USUAL","BET","PATH","FORK"],
-    board5: ["TIGER","EXAM","BUN","TRACE","HAND","STORM","SNAKE","ALARM","BEAR","HOUSE","BIRTH","TEST",
-        "DEAD","FRESH","ALIVE","TOWER","PORK","ASH","LION","HELL"],
-    board6: ["SIT","PINE","WHITE","IDEAL","CRUST","FLOUR","ROCK","LEMON","ELM","FOUND","RIVER","LOST",
-        "FLAT","CHAIN","FILL","STAND","TEAR","EXACT","BOOT","CLEVER"],
-    board7: ["HEAVY","EAST","WOOD","DIM","NEW","GLASS","HEART","FULL","TIMBER","LOVE","SOFT","METER",
-        "EMPTY","HARD","OLD","CAGE","WORN","KITCHEN","SHORT","BOOTS"],
-    board8: ["PEN","LAND","ICING","HAPPY","HORN","DRUM","FLOOR","RIDE","TALL","GIANT","RURAL","FINE",
-        "TILE","STYLE","CAKE","SUGAR","ARMY","SAD","SUBTLE","ACRE"],
-    board9: ["MALE","HAPPEN","KING","CANDLE","TOE","HAMMOCK","SILLY","TRAUMA","RAGE","WEIRD","REAL",
-        "SLEEP","FLY","WICK","GUEST","ANGER","OLIVE","SKIRT","SORE","LAYER"],
-    board10: ["FEET","CHAIR","FIRE","SHIP","LATE","LIST","GAS","DUNE","SAND","BOSS","TABLE","RING",
-        "BLAZE","GARAGE","CHAPEL","EARLY","PURE","DOPE","AWARE","BONE"],
-    board11: ["BEE","CAMEL","SOUR","DAY","MOVE","HELP","JOKE","COAL","SAME","HONEY","SIN","HALF",
-        "CORAL","NIGHT","ASSIST","PET","ENVY","LAUGH","WASH","TOAD"],
-    board12: ["TULIP","ZONE","CHALK","FIST","SAFE","PRISON","PAIN","MOVIE","SMILE","PINK","GRASP",
-        "TERM","AGONY","LEGAL","BEND","FILM","PAIL","BOARD","FLOWER","RUBY"],
-    board13: ["ROPE","FOLLOW","PONY","SOLID","TEXT","KNIFE","EAR","BLADE","TEA","SLOW","ART","LEAD",
-        "DARE","GIRL","WEST","BOOK","BASE","HORSE","STAB","BOY"],
-    board14: ["TUNA","WET","FLOAT","APPLE","FALL","DUSK","BOX","TALE","SIREN","WALK","EVIL","TOY",
-        "DAWN","SUIT","DRY","COLD","LOCAL","DIRTY","HOT","LIAR"],
-    board15: ["HILL","ZOO","TROUT","SALT","SOUTH","CLOTH","FORT","ROW","FISH","BOAT","PLANE","FOUL",
-        "ANIMAL","BUTTER","BARK","MAD","ROUGH","PEPPER","GOAL","DAMN"],
-    board16: ["KNOB","ERROR","FLUID","CRIB","PROOF","RETURN","WIDE","PLUM","POWER","LIGHT","BABY",
-        "PIER","WORRY","WORKER","DOOR","SMALL","POET","SOBER","LAMP","TASK"],
-    board17: ["TOUGH","KEY","WORST","WAG","BADGE","SOIL","WARM","SHELF","WRITE","CART","GIFT","THREAD",
-        "ANGLE","BEST","WOOL","DIRT","TAIL","SAGE","TREAT","SKILL"],
-    board18: ["CREDIT","FROG","MOLE","JUNK","LEASE","GAME","VINE","SHOP","GRAPE","JUICE","SPELL",
-        "SPIDER","OAR","JOIN","SKY","CROAK","WRONG","TAN","CARD","FUSE"],
+    boardboard: [board0, board0, board0, board1, board1, board1, board2, board2, board2, board3, 
+        board3, board3, board4, board4, board4, board5, board5, board5, board6, board6, board6, 
+        board7, board7, board7, board8, board8, board8, board9, board9, board9, board10, board10, 
+        board10, board11, board11, board11,
+        board12, board12, board12, board13, board13, board13, board14, board14, board14, board15, 
+        board15, board15, board16, board16, board16, board17, board17, board17, board18, board18, board18],
 
-    boardboard: [this.board0, this.board0, this.board0, this.board1, this.board1, this.board1, this.board2, this.board2, this.board2, this.board3, 
-        this.board3, this.board3, this.board4, this.board4, this.board4, this.board5, this.board5, this.board5, this.board6, this.board6, this.board6, 
-        this.board7, this.board7, this.board7, this.board8, this.board8, this.board8, this.board9, this.board9, this.board9, this.board10, this.board10, 
-        this.board10, this.board11, this.board11, this.board11,
-        this.board12, this.board12, this.board12, this.board13, this.board13, this.board13, this.board14, this.board14, this.board14, this.board15, 
-        this.board15, this.board15, this.board16, this.board16, this.board16, this.board17, this.board17, this.board17, this.board18, this.board18, this.board18],
-
-    pair0: ["BLOW","BLAZE"],
-    pair1: ["SMELL","EYES"],
-    pair2: ["WEEP","FAMILY"],
-    pair3: ["QUICK","GLOW"],
-    pair4: ["TREE","OAK"],
-    pair5: ["CAVE","KNIGHT"],
-    pair6: ["GOLD","SILVER"],
-    pair7: ["SUN","BOWL"],
-    pair8: ["STERN","WIND"],
-    pair9: ["TEETH","GUMS"],
-    pair10: ["HOLY","KIND"],
-    pair11: ["RUDE","REGRET"],
-    pair12: ["JUMP","LEAP"],
-    pair13: ["DREAM","BET"],
-    pair14: ["TRAVEL","ANKLE"],
-    pair15: ["SNAKE","ASH"],
-    pair16: ["LION","TIGER"],
-    pair17: ["HAND","BIRTH"],
-    pair18: ["SIT","STAND"],
-    pair19: ["CRUST","BOOT"],
-    pair20: ["ELM","ROCK"],
-    pair21: ["OLD","NEW"],
-    pair22: ["GLASS","CAGE"],
-    pair23: ["EAST","SHORT"],
-    pair24: ["HAPPY","SAD"],
-    pair25: ["ARMY","DRUM"],
-    pair26: ["GIANT","SUBTLE"],
-    pair27: ["CANDLE","WICK"],
-    pair28: ["OLIVE","REAL"],
-    pair29: ["WEIRD","TRAUMA"],
-    pair30: ["FEET","CHAPEL"],
-    pair31: ["CHAIR","TABLE"],
-    pair32: ["GARAGE","BONE"],
-    pair33: ["BEE","HONEY"],
-    pair34: ["CAMEL","COAL"],
-    pair35: ["SOUR","ENVY"],
-    pair36: ["GRASP","PAIL"],
-    pair37: ["MOVIE","FILM"],
-    pair38: ["RUBY","SAFE"],
-    pair39: ["KNIFE","STAB"],
-    pair40: ["SLOW","SOLID"],
-    pair41: ["BLADE","BASE"],
-    pair42: ["WET","DRY"],
-    pair43: ["LOCAL","TOY"],
-    pair44: ["SIREN","BOX"],
-    pair45: ["FISH","TROUT"],
-    pair46: ["PLANE","GOAL"],
-    pair47: ["BUTTER","FOUL"],
-    pair48: ["SOBER","WIDE"],
-    pair49: ["DOOR","KNOB"],
-    pair50: ["ERROR","POET"],
-    pair51: ["DIRT","SOIL"],
-    pair52: ["SHELF","ANGLE"],
-    pair53: ["BADGE","TREAT"],
-    pair54: ["FROG","CROAK"],
-    pair55: ["JUICE","JUNK"],
-    pair56: ["SPIDER","JOIN"],
-
-    pairList: [this.pair0,this.pair1,this.pair2,this.pair3,this.pair4,this.pair5,this.pair6,this.pair7,this.pair8,this.pair9,this.pair10,this.pair11,this.pair12,
-        this.pair13,this.pair14,this.pair15,this.pair16,this.pair17,this.pair18,this.pair19,this.pair20,this.pair21,this.pair22,this.pair23,this.pair24,this.pair25,
-        this.pair26,this.pair27,this.pair28,this.pair29,this.pair30,this.pair31,this.pair32,this.pair33,this.pair34,this.pair35,this.pair36,this.pair37,this.pair38,
-        this.pair39,this.pair40,this.pair41,this.pair42,this.pair43,this.pair44,this.pair45,this.pair46,this.pair47,this.pair48,this.pair49,this.pair50,this.pair51,
-        this.pair52,this.pair53,this.pair54,this.pair55,this.pair56],
+    pairList: [pair0,pair1,pair2,pair3,pair4,pair5,pair6,pair7,pair8,pair9,pair10,pair11,pair12,
+        pair13,pair14,pair15,pair16,pair17,pair18,pair19,pair20,pair21,pair22,pair23,pair24,pair25,
+        pair26,pair27,pair28,pair29,pair30,pair31,pair32,pair33,pair34,pair35,pair36,pair37,pair38,
+        pair39,pair40,pair41,pair42,pair43,pair44,pair45,pair46,pair47,pair48,pair49,pair50,pair51,
+        pair52,pair53,pair54,pair55,pair56],
 
     pairnumber: 33, // the number of pairs in the total experiment, should be 57
     pracpairnumber: 3,

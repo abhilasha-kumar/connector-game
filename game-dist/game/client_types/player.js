@@ -54,23 +54,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             return result;
         }
 
-        
-        this.boardboard = node.game.settings.boardboard;
-
         this.cluespast = [];
 
-        this.pairList = node.game.settings.pairList;
-        
         this.roundCounter = 0;//iterated value to move through the word pairs
         this.smallRoundCounter = 0;//iterated value to record the 3 trials for each word pair
-        this.pairnumber = node.game.settings.pairnumber;//the number of pairs in the total experiment, should be 57
-        console.log('pairnumber: ' + this.pairnumber);
-        this.pracpairnumber = node.game.settings.pracpairnumber;
         this.optionTimeArray = [0];
         this.id;
         this.randomCode;
         this.randomOrder = Math.floor(Math.random()*2)//randomize the order of target words for the clue-giver
-
 
     });
 
@@ -124,30 +115,30 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 frame: 'clueboard.htm',
                 cb: function() {
                     W.setInnerHTML('containerbottom2', "Please type your FINAL clue below and click Done:"),
-
-                    W.setInnerHTML('b0', this.boardboard[this.roundCounter][0]),
-                    W.setInnerHTML('b1', this.boardboard[this.roundCounter][1]);
-                    W.setInnerHTML('b2', this.boardboard[this.roundCounter][2]);
-                    W.setInnerHTML('b3', this.boardboard[this.roundCounter][3]);
-                    W.setInnerHTML('b4', this.boardboard[this.roundCounter][4]);
-                    W.setInnerHTML('b5', this.boardboard[this.roundCounter][5]);
-                    W.setInnerHTML('b6', this.boardboard[this.roundCounter][6]);
-                    W.setInnerHTML('b7', this.boardboard[this.roundCounter][7]);
-                    W.setInnerHTML('b8', this.boardboard[this.roundCounter][8]);
-                    W.setInnerHTML('b9', this.boardboard[this.roundCounter][9]);
-                    W.setInnerHTML('b10', this.boardboard[this.roundCounter][10]);
-                    W.setInnerHTML('b11', this.boardboard[this.roundCounter][11]);
-                    W.setInnerHTML('b12', this.boardboard[this.roundCounter][12]);
-                    W.setInnerHTML('b13', this.boardboard[this.roundCounter][13]);
-                    W.setInnerHTML('b14', this.boardboard[this.roundCounter][14]);
-                    W.setInnerHTML('b15', this.boardboard[this.roundCounter][15]);
-                    W.setInnerHTML('b16', this.boardboard[this.roundCounter][16]);
-                    W.setInnerHTML('b17', this.boardboard[this.roundCounter][17]);
-                    W.setInnerHTML('b18', this.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', this.boardboard[this.roundCounter][19]);
-                    W.setInnerHTML('trgtWords', this.pairList[this.roundCounter][this.randomOrder] + " and " + this.pairList[this.roundCounter][1-this.randomOrder]);
-                    node.set({target1: this.pairList[this.roundCounter][this.randomOrder]});
-                    node.set({target2: this.pairList[this.roundCounter][1-this.randomOrder]});
+                    W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
+                    W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
+                    W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
+                    W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
+                    W.setInnerHTML('b4', node.game.settings.boardboard[this.roundCounter][4]);
+                    W.setInnerHTML('b5', node.game.settings.boardboard[this.roundCounter][5]);
+                    W.setInnerHTML('b6', node.game.settings.boardboard[this.roundCounter][6]);
+                    W.setInnerHTML('b7', node.game.settings.boardboard[this.roundCounter][7]);
+                    W.setInnerHTML('b8', node.game.settings.boardboard[this.roundCounter][8]);
+                    W.setInnerHTML('b9', node.game.settings.boardboard[this.roundCounter][9]);
+                    W.setInnerHTML('b10', node.game.settings.boardboard[this.roundCounter][10]);
+                    W.setInnerHTML('b11', node.game.settings.boardboard[this.roundCounter][11]);
+                    W.setInnerHTML('b12', node.game.settings.boardboard[this.roundCounter][12]);
+                    W.setInnerHTML('b13', node.game.settings.boardboard[this.roundCounter][13]);
+                    W.setInnerHTML('b14', node.game.settings.boardboard[this.roundCounter][14]);
+                    W.setInnerHTML('b15', node.game.settings.boardboard[this.roundCounter][15]);
+                    W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
+                    W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
+                    W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
+                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);
+                    W.setInnerHTML('trgtWords', node.game.settings.pairList[this.roundCounter][this.randomOrder] + 
+                        " and " + node.game.settings.pairList[this.roundCounter][1-this.randomOrder]);
+                    node.set({target1: node.game.settings.pairList[this.roundCounter][this.randomOrder]});
+                    node.set({target2: node.game.settings.pairList[this.roundCounter][1-this.randomOrder]});
 
                     //This is the final clue 
                     this.clueGive2 = node.widgets.append('CustomInput', W.gid('containerbottom2'), {//apend customInput widget with 1 mandatory input
@@ -162,7 +153,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                            res = { value: value };
                            // Custom validation (only reports about last word).
 
-                           if (node.game.inArrayCaseInsensitive(value, node.game.boardboard[node.game.roundCounter])) {
+                           if (node.game.inArrayCaseInsensitive(value, node.game.settings.boardboard[node.game.roundCounter])) {
                                res.err = 'You have used a forbidden word: ' + value;
                            }
                            return res;
@@ -193,26 +184,26 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 frame: 'studyboard.htm',
 
                 cb: function() {
-                    W.setInnerHTML('b0', this.boardboard[this.roundCounter][0]),
-                    W.setInnerHTML('b1', this.boardboard[this.roundCounter][1]);
-                    W.setInnerHTML('b2', this.boardboard[this.roundCounter][2]);
-                    W.setInnerHTML('b3', this.boardboard[this.roundCounter][3]);
-                    W.setInnerHTML('b4', this.boardboard[this.roundCounter][4]);
-                    W.setInnerHTML('b5', this.boardboard[this.roundCounter][5]);
-                    W.setInnerHTML('b6', this.boardboard[this.roundCounter][6]);
-                    W.setInnerHTML('b7', this.boardboard[this.roundCounter][7]);
-                    W.setInnerHTML('b8', this.boardboard[this.roundCounter][8]);
-                    W.setInnerHTML('b9', this.boardboard[this.roundCounter][9]);
-                    W.setInnerHTML('b10', this.boardboard[this.roundCounter][10]);
-                    W.setInnerHTML('b11', this.boardboard[this.roundCounter][11]);
-                    W.setInnerHTML('b12', this.boardboard[this.roundCounter][12]);
-                    W.setInnerHTML('b13', this.boardboard[this.roundCounter][13]);
-                    W.setInnerHTML('b14', this.boardboard[this.roundCounter][14]);
-                    W.setInnerHTML('b15', this.boardboard[this.roundCounter][15]);
-                    W.setInnerHTML('b16', this.boardboard[this.roundCounter][16]);
-                    W.setInnerHTML('b17', this.boardboard[this.roundCounter][17]);
-                    W.setInnerHTML('b18', this.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', this.boardboard[this.roundCounter][19]);
+                    W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
+                    W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
+                    W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
+                    W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
+                    W.setInnerHTML('b4', node.game.settings.boardboard[this.roundCounter][4]);
+                    W.setInnerHTML('b5', node.game.settings.boardboard[this.roundCounter][5]);
+                    W.setInnerHTML('b6', node.game.settings.boardboard[this.roundCounter][6]);
+                    W.setInnerHTML('b7', node.game.settings.boardboard[this.roundCounter][7]);
+                    W.setInnerHTML('b8', node.game.settings.boardboard[this.roundCounter][8]);
+                    W.setInnerHTML('b9', node.game.settings.boardboard[this.roundCounter][9]);
+                    W.setInnerHTML('b10', node.game.settings.boardboard[this.roundCounter][10]);
+                    W.setInnerHTML('b11', node.game.settings.boardboard[this.roundCounter][11]);
+                    W.setInnerHTML('b12', node.game.settings.boardboard[this.roundCounter][12]);
+                    W.setInnerHTML('b13', node.game.settings.boardboard[this.roundCounter][13]);
+                    W.setInnerHTML('b14', node.game.settings.boardboard[this.roundCounter][14]);
+                    W.setInnerHTML('b15', node.game.settings.boardboard[this.roundCounter][15]);
+                    W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
+                    W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
+                    W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
+                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);
 
 
                     var that;//force proceed when clue is sent from other player
@@ -240,26 +231,26 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 frame: 'studyboardCG.htm',
                 cb: function() {
 
-                    W.setInnerHTML('b0', this.boardboard[this.roundCounter][0]),
-                    W.setInnerHTML('b1', this.boardboard[this.roundCounter][1]);
-                    W.setInnerHTML('b2', this.boardboard[this.roundCounter][2]);
-                    W.setInnerHTML('b3', this.boardboard[this.roundCounter][3]);
-                    W.setInnerHTML('b4', this.boardboard[this.roundCounter][4]);
-                    W.setInnerHTML('b5', this.boardboard[this.roundCounter][5]);
-                    W.setInnerHTML('b6', this.boardboard[this.roundCounter][6]);
-                    W.setInnerHTML('b7', this.boardboard[this.roundCounter][7]);
-                    W.setInnerHTML('b8', this.boardboard[this.roundCounter][8]);
-                    W.setInnerHTML('b9', this.boardboard[this.roundCounter][9]);
-                    W.setInnerHTML('b10', this.boardboard[this.roundCounter][10]);
-                    W.setInnerHTML('b11', this.boardboard[this.roundCounter][11]);
-                    W.setInnerHTML('b12', this.boardboard[this.roundCounter][12]);
-                    W.setInnerHTML('b13', this.boardboard[this.roundCounter][13]);
-                    W.setInnerHTML('b14', this.boardboard[this.roundCounter][14]);
-                    W.setInnerHTML('b15', this.boardboard[this.roundCounter][15]);
-                    W.setInnerHTML('b16', this.boardboard[this.roundCounter][16]);
-                    W.setInnerHTML('b17', this.boardboard[this.roundCounter][17]);
-                    W.setInnerHTML('b18', this.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', this.boardboard[this.roundCounter][19]);
+                    W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
+                    W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
+                    W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
+                    W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
+                    W.setInnerHTML('b4', node.game.settings.boardboard[this.roundCounter][4]);
+                    W.setInnerHTML('b5', node.game.settings.boardboard[this.roundCounter][5]);
+                    W.setInnerHTML('b6', node.game.settings.boardboard[this.roundCounter][6]);
+                    W.setInnerHTML('b7', node.game.settings.boardboard[this.roundCounter][7]);
+                    W.setInnerHTML('b8', node.game.settings.boardboard[this.roundCounter][8]);
+                    W.setInnerHTML('b9', node.game.settings.boardboard[this.roundCounter][9]);
+                    W.setInnerHTML('b10', node.game.settings.boardboard[this.roundCounter][10]);
+                    W.setInnerHTML('b11', node.game.settings.boardboard[this.roundCounter][11]);
+                    W.setInnerHTML('b12', node.game.settings.boardboard[this.roundCounter][12]);
+                    W.setInnerHTML('b13', node.game.settings.boardboard[this.roundCounter][13]);
+                    W.setInnerHTML('b14', node.game.settings.boardboard[this.roundCounter][14]);
+                    W.setInnerHTML('b15', node.game.settings.boardboard[this.roundCounter][15]);
+                    W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
+                    W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
+                    W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
+                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);
 
 
                     var that;//force proceed when guess is sent from other player
@@ -278,26 +269,26 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 donebutton: false,
                 cb: function() {
 
-                    W.setInnerHTML('b0', this.boardboard[this.roundCounter][0]),
-                    W.setInnerHTML('b1', this.boardboard[this.roundCounter][1]);
-                    W.setInnerHTML('b2', this.boardboard[this.roundCounter][2]);
-                    W.setInnerHTML('b3', this.boardboard[this.roundCounter][3]);
-                    W.setInnerHTML('b4', this.boardboard[this.roundCounter][4]);
-                    W.setInnerHTML('b5', this.boardboard[this.roundCounter][5]);
-                    W.setInnerHTML('b6', this.boardboard[this.roundCounter][6]);
-                    W.setInnerHTML('b7', this.boardboard[this.roundCounter][7]);
-                    W.setInnerHTML('b8', this.boardboard[this.roundCounter][8]);
-                    W.setInnerHTML('b9', this.boardboard[this.roundCounter][9]);
-                    W.setInnerHTML('b10', this.boardboard[this.roundCounter][10]);
-                    W.setInnerHTML('b11', this.boardboard[this.roundCounter][11]);
-                    W.setInnerHTML('b12', this.boardboard[this.roundCounter][12]);
-                    W.setInnerHTML('b13', this.boardboard[this.roundCounter][13]);
-                    W.setInnerHTML('b14', this.boardboard[this.roundCounter][14]);
-                    W.setInnerHTML('b15', this.boardboard[this.roundCounter][15]);
-                    W.setInnerHTML('b16', this.boardboard[this.roundCounter][16]);
-                    W.setInnerHTML('b17', this.boardboard[this.roundCounter][17]);
-                    W.setInnerHTML('b18', this.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', this.boardboard[this.roundCounter][19]);
+                    W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
+                    W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
+                    W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
+                    W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
+                    W.setInnerHTML('b4', node.game.settings.boardboard[this.roundCounter][4]);
+                    W.setInnerHTML('b5', node.game.settings.boardboard[this.roundCounter][5]);
+                    W.setInnerHTML('b6', node.game.settings.boardboard[this.roundCounter][6]);
+                    W.setInnerHTML('b7', node.game.settings.boardboard[this.roundCounter][7]);
+                    W.setInnerHTML('b8', node.game.settings.boardboard[this.roundCounter][8]);
+                    W.setInnerHTML('b9', node.game.settings.boardboard[this.roundCounter][9]);
+                    W.setInnerHTML('b10', node.game.settings.boardboard[this.roundCounter][10]);
+                    W.setInnerHTML('b11', node.game.settings.boardboard[this.roundCounter][11]);
+                    W.setInnerHTML('b12', node.game.settings.boardboard[this.roundCounter][12]);
+                    W.setInnerHTML('b13', node.game.settings.boardboard[this.roundCounter][13]);
+                    W.setInnerHTML('b14', node.game.settings.boardboard[this.roundCounter][14]);
+                    W.setInnerHTML('b15', node.game.settings.boardboard[this.roundCounter][15]);
+                    W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
+                    W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
+                    W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
+                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);
 
 
                     //W.setInnerHTML('clue', this.clueReceived);
@@ -405,26 +396,26 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 frame: 'studyboardCG.htm',
                 cb: function() {
 
-                    W.setInnerHTML('b0', this.boardboard[this.roundCounter][0]),
-                    W.setInnerHTML('b1', this.boardboard[this.roundCounter][1]);
-                    W.setInnerHTML('b2', this.boardboard[this.roundCounter][2]);
-                    W.setInnerHTML('b3', this.boardboard[this.roundCounter][3]);
-                    W.setInnerHTML('b4', this.boardboard[this.roundCounter][4]);
-                    W.setInnerHTML('b5', this.boardboard[this.roundCounter][5]);
-                    W.setInnerHTML('b6', this.boardboard[this.roundCounter][6]);
-                    W.setInnerHTML('b7', this.boardboard[this.roundCounter][7]);
-                    W.setInnerHTML('b8', this.boardboard[this.roundCounter][8]);
-                    W.setInnerHTML('b9', this.boardboard[this.roundCounter][9]);
-                    W.setInnerHTML('b10', this.boardboard[this.roundCounter][10]);
-                    W.setInnerHTML('b11', this.boardboard[this.roundCounter][11]);
-                    W.setInnerHTML('b12', this.boardboard[this.roundCounter][12]);
-                    W.setInnerHTML('b13', this.boardboard[this.roundCounter][13]);
-                    W.setInnerHTML('b14', this.boardboard[this.roundCounter][14]);
-                    W.setInnerHTML('b15', this.boardboard[this.roundCounter][15]);
-                    W.setInnerHTML('b16', this.boardboard[this.roundCounter][16]);
-                    W.setInnerHTML('b17', this.boardboard[this.roundCounter][17]);
-                    W.setInnerHTML('b18', this.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', this.boardboard[this.roundCounter][19]);
+                    W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
+                    W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
+                    W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
+                    W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
+                    W.setInnerHTML('b4', node.game.settings.boardboard[this.roundCounter][4]);
+                    W.setInnerHTML('b5', node.game.settings.boardboard[this.roundCounter][5]);
+                    W.setInnerHTML('b6', node.game.settings.boardboard[this.roundCounter][6]);
+                    W.setInnerHTML('b7', node.game.settings.boardboard[this.roundCounter][7]);
+                    W.setInnerHTML('b8', node.game.settings.boardboard[this.roundCounter][8]);
+                    W.setInnerHTML('b9', node.game.settings.boardboard[this.roundCounter][9]);
+                    W.setInnerHTML('b10', node.game.settings.boardboard[this.roundCounter][10]);
+                    W.setInnerHTML('b11', node.game.settings.boardboard[this.roundCounter][11]);
+                    W.setInnerHTML('b12', node.game.settings.boardboard[this.roundCounter][12]);
+                    W.setInnerHTML('b13', node.game.settings.boardboard[this.roundCounter][13]);
+                    W.setInnerHTML('b14', node.game.settings.boardboard[this.roundCounter][14]);
+                    W.setInnerHTML('b15', node.game.settings.boardboard[this.roundCounter][15]);
+                    W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
+                    W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
+                    W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
+                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);
 
 
                     var that;//receives two messages, one for each guessed word. ends after receiving the second one
@@ -444,26 +435,26 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 donebutton: false,
                 cb: function() {
                     W.setInnerHTML('clue2', "Please select your FINAL guesses." ),
-                    W.setInnerHTML('b0', this.boardboard[this.roundCounter][0]),
-                    W.setInnerHTML('b1', this.boardboard[this.roundCounter][1]);
-                    W.setInnerHTML('b2', this.boardboard[this.roundCounter][2]);
-                    W.setInnerHTML('b3', this.boardboard[this.roundCounter][3]);
-                    W.setInnerHTML('b4', this.boardboard[this.roundCounter][4]);
-                    W.setInnerHTML('b5', this.boardboard[this.roundCounter][5]);
-                    W.setInnerHTML('b6', this.boardboard[this.roundCounter][6]);
-                    W.setInnerHTML('b7', this.boardboard[this.roundCounter][7]);
-                    W.setInnerHTML('b8', this.boardboard[this.roundCounter][8]);
-                    W.setInnerHTML('b9', this.boardboard[this.roundCounter][9]);
-                    W.setInnerHTML('b10', this.boardboard[this.roundCounter][10]);
-                    W.setInnerHTML('b11', this.boardboard[this.roundCounter][11]);
-                    W.setInnerHTML('b12', this.boardboard[this.roundCounter][12]);
-                    W.setInnerHTML('b13', this.boardboard[this.roundCounter][13]);
-                    W.setInnerHTML('b14', this.boardboard[this.roundCounter][14]);
-                    W.setInnerHTML('b15', this.boardboard[this.roundCounter][15]);
-                    W.setInnerHTML('b16', this.boardboard[this.roundCounter][16]);
-                    W.setInnerHTML('b17', this.boardboard[this.roundCounter][17]);
-                    W.setInnerHTML('b18', this.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', this.boardboard[this.roundCounter][19]);
+                    W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
+                    W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
+                    W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
+                    W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
+                    W.setInnerHTML('b4', node.game.settings.boardboard[this.roundCounter][4]);
+                    W.setInnerHTML('b5', node.game.settings.boardboard[this.roundCounter][5]);
+                    W.setInnerHTML('b6', node.game.settings.boardboard[this.roundCounter][6]);
+                    W.setInnerHTML('b7', node.game.settings.boardboard[this.roundCounter][7]);
+                    W.setInnerHTML('b8', node.game.settings.boardboard[this.roundCounter][8]);
+                    W.setInnerHTML('b9', node.game.settings.boardboard[this.roundCounter][9]);
+                    W.setInnerHTML('b10', node.game.settings.boardboard[this.roundCounter][10]);
+                    W.setInnerHTML('b11', node.game.settings.boardboard[this.roundCounter][11]);
+                    W.setInnerHTML('b12', node.game.settings.boardboard[this.roundCounter][12]);
+                    W.setInnerHTML('b13', node.game.settings.boardboard[this.roundCounter][13]);
+                    W.setInnerHTML('b14', node.game.settings.boardboard[this.roundCounter][14]);
+                    W.setInnerHTML('b15', node.game.settings.boardboard[this.roundCounter][15]);
+                    W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
+                    W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
+                    W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
+                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);
 
                     this.answerCounter = 0;
 
@@ -527,7 +518,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     var myDiv2 = W.getElementById("cgcorrect");
                     var myDiv3 = W.getElementById("cgnextstep");
                     //var myDiv4 = W.getElementById("cgnextboard");
-                    if(this.pairList[this.roundCounter].includes(this.guess1Received)&&this.pairList[this.roundCounter].includes(this.guess2Received)){//if they were correct it ends the stage and moves on to the next word pair
+                    if(node.game.settings.pairList[this.roundCounter].includes(this.guess1Received)&&node.game.settings.pairList[this.roundCounter].includes(this.guess2Received)){//if they were correct it ends the stage and moves on to the next word pair
                         myDiv.innerHTML = "The Guesser responded with " + this.guess1Received + " and " + this.guess2Received + " which is CORRECT!";
                         myDiv2.innerHTML = "You will now move on to the next word pair. Please click Done.";
                         myDiv3.innerHTML = "";
@@ -541,13 +532,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         if(this.roundcounter%3 == 0){
                             myDiv2.innerHTML = "You will now move on to the next board. Please click Done.";
                         }
-                        if(this.roundCounter == this.pracpairnumber){//if the next value is equal to number of pairs then we are out of pairs and the experiment is over
+                        if(this.roundCounter == node.game.settings.pracpairnumber){//if the next value is equal to number of pairs then we are out of pairs and the experiment is over
                             node.say('END_GAME', 'SERVER', true);
                         }
                     }
                     else if(this.smallRoundCounter == 2){//if this is the third trial the players did not get the word and we move to the next word pair
                         myDiv.innerHTML = "The Guesser responded with " + this.guess1Received + " and " + this.guess2Received + " which is INCORRECT!";
-                        myDiv2.innerHTML = "You have exhausted your three attempts. The correct words were " + this.pairList[this.roundCounter][0] + " and " + this.pairList[this.roundCounter][1] + ".";
+                        myDiv2.innerHTML = "You have exhausted your three attempts. The correct words were " + node.game.settings.pairList[this.roundCounter][0] + " and " + node.game.settings.pairList[this.roundCounter][1] + ".";
                         myDiv3.innerHTML = "You will now move on to the next word pair. Please click Done.";
                         this.roundCounter += 1;
                         this.randomOrder = Math.floor(Math.random()*2)//randomize the order of target words for the clue-giver
@@ -559,7 +550,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         if(this.roundcounter%3 == 0){
                             myDiv3.innerHTML = "You will now move on to the next board. Please click Done.";
                         }
-                        if(this.roundCounter == this.pracpairnumber){//if the next value is equal to number of pairs then we are out of pairs and the experiment is over
+                        if(this.roundCounter == node.game.settings.pracpairnumber){//if the next value is equal to number of pairs then we are out of pairs and the experiment is over
                             node.say('END_GAME', 'SERVER', true);
                         }
                     }
@@ -580,7 +571,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     var myDiv = W.getElementById("ganswers");
                     var myDiv2 = W.getElementById("gcorrect");
                     var myDiv3 = W.getElementById("gnextstep");
-                    if(this.pairList[this.roundCounter].includes(guess1TXT)&&this.pairList[this.roundCounter].includes(guess2TXT)){//if they were correct it ends the stage and moves on to the next word pair
+                    if(node.game.settings.pairList[this.roundCounter].includes(guess1TXT)&&node.game.settings.pairList[this.roundCounter].includes(guess2TXT)){//if they were correct it ends the stage and moves on to the next word pair
                         myDiv.innerHTML = "You responded with " + guess1TXT + " and " + guess2TXT + " which is CORRECT!";
                         myDiv2.innerHTML = "You will now move on to the next word pair. Please click Done.";
                         myDiv3.innerHTML = "";
@@ -590,13 +581,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                             this.cluespast.pop();
                         }
                         this.smallRoundCounter = 0;
-                        if(this.roundCounter == this.pairnumber){//if the next value is equal to number of pairs then we are out of pairs and the experiment is over
+                        if(this.roundCounter == node.game.settings.pairnumber){//if the next value is equal to number of pairs then we are out of pairs and the experiment is over
                             node.say('END_GAME', 'SERVER', true);
                         }
                     }
                     else if(this.smallRoundCounter == 2){//if this is the third trial the players did not get the word and we move to the next word pair
                         myDiv.innerHTML = "You responded with " + guess1TXT + " and " + guess2TXT + " which is INCORRECT!";
-                        myDiv2.innerHTML = "You have exhausted your three attempts. The correct words were " + this.pairList[this.roundCounter][0] + " and " + this.pairList[this.roundCounter][1] + ".";
+                        myDiv2.innerHTML = "You have exhausted your three attempts. The correct words were " + node.game.settings.pairList[this.roundCounter][0] + " and " + node.game.settings.pairList[this.roundCounter][1] + ".";
                         myDiv3.innerHTML = "You will now move on to the next word pair. Please click Done.";
                         this.roundCounter += 1;
                         var l;
@@ -604,7 +595,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                             this.cluespast.pop();
                         }
                         this.smallRoundCounter = 0;
-                        if(this.roundCounter == this.pairnumber){//if the next value is equal to number of pairs then we are out of pairs and the experiment is over
+                        if(this.roundCounter == node.game.settings.pairnumber){//if the next value is equal to number of pairs then we are out of pairs and the experiment is over
                             node.say('END_GAME', 'SERVER', true);
                         }
                     }
@@ -632,199 +623,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         }
     });
 
-
-
-
-
-
-
-
-
-
-    // stager.extendStep('clueOptions', {
-    //     role: function() { return this.role; },//This code is repeated to maintain roles throughout steps of experiment
-    //     partner: function() { return this.partner; },
-
-    //     roles: {
-    //         CLUEGIVER:{
-    //             frame: 'clueboard.htm',
-    //             init: function() {
-    //                 node.game.clueReceived = null;
-    //             },
-    //             cb: function() {
-    //                 W.setInnerHTML('b0', this.boardboard[this.roundCounter][0]),//Initialize board with values from our array each round
-    //                 W.setInnerHTML('b1', this.boardboard[this.roundCounter][1]);
-    //                 W.setInnerHTML('b2', this.boardboard[this.roundCounter][2]);
-    //                 W.setInnerHTML('b3', this.boardboard[this.roundCounter][3]);
-    //                 W.setInnerHTML('b4', this.boardboard[this.roundCounter][4]);
-    //                 W.setInnerHTML('b5', this.boardboard[this.roundCounter][5]);
-    //                 W.setInnerHTML('b6', this.boardboard[this.roundCounter][6]);
-    //                 W.setInnerHTML('b7', this.boardboard[this.roundCounter][7]);
-    //                 W.setInnerHTML('b8', this.boardboard[this.roundCounter][8]);
-    //                 W.setInnerHTML('b9', this.boardboard[this.roundCounter][9]);
-    //                 W.setInnerHTML('b10', this.boardboard[this.roundCounter][10]);
-    //                 W.setInnerHTML('b11', this.boardboard[this.roundCounter][11]);
-    //                 W.setInnerHTML('b12', this.boardboard[this.roundCounter][12]);
-    //                 W.setInnerHTML('b13', this.boardboard[this.roundCounter][13]);
-    //                 W.setInnerHTML('b14', this.boardboard[this.roundCounter][14]);
-    //                 W.setInnerHTML('b15', this.boardboard[this.roundCounter][15]);
-    //                 W.setInnerHTML('b16', this.boardboard[this.roundCounter][16]);
-    //                 W.setInnerHTML('b17', this.boardboard[this.roundCounter][17]);
-    //                 W.setInnerHTML('b18', this.boardboard[this.roundCounter][18]);
-    //                 W.setInnerHTML('b19', this.boardboard[this.roundCounter][19]);
-
-    //                 W.setInnerHTML('trgtWords', this.pairList[this.roundCounter][this.randomOrder] + " and " + this.pairList[this.roundCounter][1-this.randomOrder]);
-    //                 node.set({target1: this.pairList[this.roundCounter][this.randomOrder]});
-    //                 node.set({target2: this.pairList[this.roundCounter][1-this.randomOrder]});
-
-    //                 this.cluesGive = node.widgets.append('CustomInputGroup', W.gid('containerbottom'), {//create customInputGroup widget for clue options, only the first is mandatory
-    //                    id: 'cluesGive',
-    //                    orientation: 'H',
-    //                    required: true,
-
-
-    //                    //mainText: 'Please list possible clues.',
-    //                    sharedOptions: {
-    //                       type: 'text',
-    //                       width: '80%'
-    //                    },
-    //                    items: [
-    //                        {
-    //                            id: 'clue1',
-    //                            mainText: 'Option 1',
-    //                            requiredChoice: true
-    //                        }
-    //                    ],
-    //                    validation: function(res, values) {
-    //                        // Custom validation (only reports about last word).
-
-    //                        if (values.clue1 && node.game.inArrayCaseInsensitive(values.clue1, node.game.boardboard[node.game.roundCounter])) {
-    //                            res.err = 'You have used a forbidden word: ' + values.clue1;
-    //                        }
-
-    //                        if (values.clue2 && node.game.inArrayCaseInsensitive(values.clue2, node.game.boardboard[node.game.roundCounter])) {
-    //                            res.err = 'You have used a forbidden word: ' + values.clue2;
-    //                        }
-    //                        if (values.clue3 && node.game.inArrayCaseInsensitive(values.clue3, node.game.boardboard[node.game.roundCounter])) {
-    //                            res.err = 'You have used a forbidden word: ' + values.clue3;
-    //                        }
-    //                        if (values.clue4 && node.game.inArrayCaseInsensitive(values.clue4, node.game.boardboard[node.game.roundCounter])) {
-    //                            res.err = 'You have used a forbidden word: ' + values.clue4;
-    //                        }
-    //                        if (values.clue5 && node.game.inArrayCaseInsensitive(values.clue5, node.game.boardboard[node.game.roundCounter])) {
-    //                            res.err = 'You have used a forbidden word: ' + values.clue5;
-    //                        }
-    //                        if (values.clue6 && node.game.inArrayCaseInsensitive(values.clue6, node.game.boardboard[node.game.roundCounter])) {
-    //                            res.err = 'You have used a forbidden word: ' + values.clue6;
-    //                        }
-    //                        if (values.clue7 && node.game.inArrayCaseInsensitive(values.clue7, node.game.boardboard[node.game.roundCounter])) {
-    //                            res.err = 'You have used a forbidden word: ' + values.clue7;
-    //                        }
-    //                        if (values.clue8 && node.game.inArrayCaseInsensitive(values.clue8, node.game.boardboard[node.game.roundCounter])) {
-    //                            res.err = 'You have used a forbidden word: ' + values.clue8;
-    //                        }
-
-    //                        return res;
-    //                    },
-
-    //                    oninput: function(res, input, that) {
-    //                        var values = {};
-    //                        values[input.it] = res;
-    //                        that.validation(res, values);
-    //                    }
-
-
-    //                });
-    //             },
-    //             done: function() {//this sens all data to the logic client and stores the values
-    //                 node.set({clueGiverID: this.id}),
-    //                 node.set({clueGiverRandCode: this.randomCode}),
-
-
-    //                 node.set({clueOption1 : this.cluesGive.getValues().items['clue1'].value}),
-    //                 node.set({TBOption1 : this.cluesGive.getValues().items['clue1'].timeBegin}),
-    //                 node.set({TEOption1 : this.cluesGive.getValues().items['clue1'].timeEnd}),
-
-    //                 // node.set({clueOption2 : this.cluesGive.getValues().items['clue2'].value}),
-    //                 // node.set({TBOption2 : this.cluesGive.getValues().items['clue2'].timeBegin}),
-    //                 // node.set({TEOption2 : this.cluesGive.getValues().items['clue2'].timeEnd}),
-
-    //                 // node.set({clueOption3 : this.cluesGive.getValues().items['clue3'].value}),
-    //                 // node.set({TBOption3 : this.cluesGive.getValues().items['clue3'].timeBegin}),
-    //                 // node.set({TEOption3 : this.cluesGive.getValues().items['clue3'].timeEnd}),
-
-    //                 // node.set({clueOption4 : this.cluesGive.getValues().items['clue4'].value}),
-    //                 // node.set({TBOption4 : this.cluesGive.getValues().items['clue4'].timeBegin}),
-    //                 // node.set({TEOption4 : this.cluesGive.getValues().items['clue4'].timeEnd}),
-
-    //                 // node.set({clueOption5 : this.cluesGive.getValues().items['clue5'].value}),
-    //                 // node.set({TBOption5 : this.cluesGive.getValues().items['clue5'].timeBegin}),
-    //                 // node.set({TEOption5 : this.cluesGive.getValues().items['clue5'].timeEnd}),
-
-    //                 // node.set({clueOption6 : this.cluesGive.getValues().items['clue6'].value}),
-    //                 // node.set({TBOption6 : this.cluesGive.getValues().items['clue6'].timeBegin}),
-    //                 // node.set({TEOption6 : this.cluesGive.getValues().items['clue6'].timeEnd}),
-
-    //                 // node.set({clueOption7 : this.cluesGive.getValues().items['clue7'].value}),
-    //                 // node.set({TBOption7 : this.cluesGive.getValues().items['clue7'].timeBegin}),
-    //                 // node.set({TEOption7 : this.cluesGive.getValues().items['clue7'].timeEnd}),
-
-    //                 // node.set({clueOption8 : this.cluesGive.getValues().items['clue8'].value}),
-    //                 // node.set({TBOption8 : this.cluesGive.getValues().items['clue8'].timeBegin}),
-    //                 // node.set({TEOption8 : this.cluesGive.getValues().items['clue8'].timeEnd}),
-
-    //                 node.say('CLUES', node.game.partner, this.cluesGive.getValues().items['clue1'].value);//this sends a signal to the other player so their step ends
-    //                 return;
-    //             }
-
-    //         },
-    //         GUESSER:{
-    //             init: function() {
-    //                 node.game.clueReceived = null;
-    //             },
-    //             donebutton: false,//disable done button so they cannot proceed without their partner finishing
-    //             frame: 'studyboard.htm',
-    //             cb: function() {//set the board for the guesser
-
-    //                 W.setInnerHTML('b0', this.boardboard[this.roundCounter][0]),
-    //                 W.setInnerHTML('b1', this.boardboard[this.roundCounter][1]);
-    //                 W.setInnerHTML('b2', this.boardboard[this.roundCounter][2]);
-    //                 W.setInnerHTML('b3', this.boardboard[this.roundCounter][3]);
-    //                 W.setInnerHTML('b4', this.boardboard[this.roundCounter][4]);
-    //                 W.setInnerHTML('b5', this.boardboard[this.roundCounter][5]);
-    //                 W.setInnerHTML('b6', this.boardboard[this.roundCounter][6]);
-    //                 W.setInnerHTML('b7', this.boardboard[this.roundCounter][7]);
-    //                 W.setInnerHTML('b8', this.boardboard[this.roundCounter][8]);
-    //                 W.setInnerHTML('b9', this.boardboard[this.roundCounter][9]);
-    //                 W.setInnerHTML('b10', this.boardboard[this.roundCounter][10]);
-    //                 W.setInnerHTML('b11', this.boardboard[this.roundCounter][11]);
-    //                 W.setInnerHTML('b12', this.boardboard[this.roundCounter][12]);
-    //                 W.setInnerHTML('b13', this.boardboard[this.roundCounter][13]);
-    //                 W.setInnerHTML('b14', this.boardboard[this.roundCounter][14]);
-    //                 W.setInnerHTML('b15', this.boardboard[this.roundCounter][15]);
-    //                 W.setInnerHTML('b16', this.boardboard[this.roundCounter][16]);
-    //                 W.setInnerHTML('b17', this.boardboard[this.roundCounter][17]);
-    //                 W.setInnerHTML('b18', this.boardboard[this.roundCounter][18]);
-    //                 W.setInnerHTML('b19', this.boardboard[this.roundCounter][19]);
-
-
-    //                 var that;//this block forces the end of the step on receiving data
-    //                 if (this.clueReceived !== null) node.done();
-    //                 that = this;
-    //                 node.on.data('CLUES', function(msg) {
-    //                     that.clueReceived = msg.data;
-    //                     node.done();
-    //                 });
-    //             },
-    //             done: function() {
-    //                 node.set({guesserID: this.id});
-    //                 node.set({guesserRandCode: this.randomCode});
-    //                 return;
-    //             }
-    //         }
-    //     }
-    // });
-
     stager.extendStep('clueFinal', {
         role: function() { return this.role; },
         partner: function() { return this.partner; },
@@ -832,32 +630,33 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             CLUEGIVER:{
                 frame: 'clueboard.htm',
                 cb: function() {
+                    console.log('Loading clue board ...');
                     W.setInnerHTML('containerbottom2', "Please type your FINAL clue below and click Done:"),
 
-                    W.setInnerHTML('b0', this.boardboard[this.roundCounter][0]),
-                    W.setInnerHTML('b1', this.boardboard[this.roundCounter][1]);
-                    W.setInnerHTML('b2', this.boardboard[this.roundCounter][2]);
-                    W.setInnerHTML('b3', this.boardboard[this.roundCounter][3]);
-                    W.setInnerHTML('b4', this.boardboard[this.roundCounter][4]);
-                    W.setInnerHTML('b5', this.boardboard[this.roundCounter][5]);
-                    W.setInnerHTML('b6', this.boardboard[this.roundCounter][6]);
-                    W.setInnerHTML('b7', this.boardboard[this.roundCounter][7]);
-                    W.setInnerHTML('b8', this.boardboard[this.roundCounter][8]);
-                    W.setInnerHTML('b9', this.boardboard[this.roundCounter][9]);
-                    W.setInnerHTML('b10', this.boardboard[this.roundCounter][10]);
-                    W.setInnerHTML('b11', this.boardboard[this.roundCounter][11]);
-                    W.setInnerHTML('b12', this.boardboard[this.roundCounter][12]);
-                    W.setInnerHTML('b13', this.boardboard[this.roundCounter][13]);
-                    W.setInnerHTML('b14', this.boardboard[this.roundCounter][14]);
-                    W.setInnerHTML('b15', this.boardboard[this.roundCounter][15]);
-                    W.setInnerHTML('b16', this.boardboard[this.roundCounter][16]);
-                    W.setInnerHTML('b17', this.boardboard[this.roundCounter][17]);
-                    W.setInnerHTML('b18', this.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', this.boardboard[this.roundCounter][19]);
+                    W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
+                    W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
+                    W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
+                    W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
+                    W.setInnerHTML('b4', node.game.settings.boardboard[this.roundCounter][4]);
+                    W.setInnerHTML('b5', node.game.settings.boardboard[this.roundCounter][5]);
+                    W.setInnerHTML('b6', node.game.settings.boardboard[this.roundCounter][6]);
+                    W.setInnerHTML('b7', node.game.settings.boardboard[this.roundCounter][7]);
+                    W.setInnerHTML('b8', node.game.settings.boardboard[this.roundCounter][8]);
+                    W.setInnerHTML('b9', node.game.settings.boardboard[this.roundCounter][9]);
+                    W.setInnerHTML('b10', node.game.settings.boardboard[this.roundCounter][10]);
+                    W.setInnerHTML('b11', node.game.settings.boardboard[this.roundCounter][11]);
+                    W.setInnerHTML('b12', node.game.settings.boardboard[this.roundCounter][12]);
+                    W.setInnerHTML('b13', node.game.settings.boardboard[this.roundCounter][13]);
+                    W.setInnerHTML('b14', node.game.settings.boardboard[this.roundCounter][14]);
+                    W.setInnerHTML('b15', node.game.settings.boardboard[this.roundCounter][15]);
+                    W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
+                    W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
+                    W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
+                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);
 
-                    W.setInnerHTML('trgtWords', this.pairList[this.roundCounter][this.randomOrder] + " and " + this.pairList[this.roundCounter][1-this.randomOrder]);
-                    node.set({target1: this.pairList[this.roundCounter][this.randomOrder]});
-                    node.set({target2: this.pairList[this.roundCounter][1-this.randomOrder]});
+                    W.setInnerHTML('trgtWords', node.game.settings.pairList[this.roundCounter][this.randomOrder] + " and " + node.game.settings.pairList[this.roundCounter][1-this.randomOrder]);
+                    node.set({target1: node.game.settings.pairList[this.roundCounter][this.randomOrder]});
+                    node.set({target2: node.game.settings.pairList[this.roundCounter][1-this.randomOrder]});
 
                     this.clueGive2 = node.widgets.append('CustomInput', W.gid('containerbottom2'), {//apend customInput widget with 1 mandatory input
                        id: 'clueGive',
@@ -870,7 +669,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                            var res;
                            res = { value: value };
                            // Custom validation (only reports about last word).
-
+                           console.log('Validating: ' + value);
                            if (node.game.inArrayCaseInsensitive(value, node.game.boardboard[node.game.roundCounter])) {
                                res.err = 'You have used a forbidden word: ' + value;
                            }
@@ -882,6 +681,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                    });
                 },
                 done: function() {//send clue to other player and clue and time info to database
+                    console.log('Done, pushing clue to other player ...');
                     this.cluespast.push(this.clueGive2.getValues().value);
 
                     node.say('CLUE', node.game.partner, this.clueGive2.getValues().value);
@@ -902,26 +702,26 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 frame: 'studyboard.htm',
 
                 cb: function() {
-                    W.setInnerHTML('b0', this.boardboard[this.roundCounter][0]),
-                    W.setInnerHTML('b1', this.boardboard[this.roundCounter][1]);
-                    W.setInnerHTML('b2', this.boardboard[this.roundCounter][2]);
-                    W.setInnerHTML('b3', this.boardboard[this.roundCounter][3]);
-                    W.setInnerHTML('b4', this.boardboard[this.roundCounter][4]);
-                    W.setInnerHTML('b5', this.boardboard[this.roundCounter][5]);
-                    W.setInnerHTML('b6', this.boardboard[this.roundCounter][6]);
-                    W.setInnerHTML('b7', this.boardboard[this.roundCounter][7]);
-                    W.setInnerHTML('b8', this.boardboard[this.roundCounter][8]);
-                    W.setInnerHTML('b9', this.boardboard[this.roundCounter][9]);
-                    W.setInnerHTML('b10', this.boardboard[this.roundCounter][10]);
-                    W.setInnerHTML('b11', this.boardboard[this.roundCounter][11]);
-                    W.setInnerHTML('b12', this.boardboard[this.roundCounter][12]);
-                    W.setInnerHTML('b13', this.boardboard[this.roundCounter][13]);
-                    W.setInnerHTML('b14', this.boardboard[this.roundCounter][14]);
-                    W.setInnerHTML('b15', this.boardboard[this.roundCounter][15]);
-                    W.setInnerHTML('b16', this.boardboard[this.roundCounter][16]);
-                    W.setInnerHTML('b17', this.boardboard[this.roundCounter][17]);
-                    W.setInnerHTML('b18', this.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', this.boardboard[this.roundCounter][19]);
+                    W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
+                    W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
+                    W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
+                    W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
+                    W.setInnerHTML('b4', node.game.settings.boardboard[this.roundCounter][4]);
+                    W.setInnerHTML('b5', node.game.settings.boardboard[this.roundCounter][5]);
+                    W.setInnerHTML('b6', node.game.settings.boardboard[this.roundCounter][6]);
+                    W.setInnerHTML('b7', node.game.settings.boardboard[this.roundCounter][7]);
+                    W.setInnerHTML('b8', node.game.settings.boardboard[this.roundCounter][8]);
+                    W.setInnerHTML('b9', node.game.settings.boardboard[this.roundCounter][9]);
+                    W.setInnerHTML('b10', node.game.settings.boardboard[this.roundCounter][10]);
+                    W.setInnerHTML('b11', node.game.settings.boardboard[this.roundCounter][11]);
+                    W.setInnerHTML('b12', node.game.settings.boardboard[this.roundCounter][12]);
+                    W.setInnerHTML('b13', node.game.settings.boardboard[this.roundCounter][13]);
+                    W.setInnerHTML('b14', node.game.settings.boardboard[this.roundCounter][14]);
+                    W.setInnerHTML('b15', node.game.settings.boardboard[this.roundCounter][15]);
+                    W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
+                    W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
+                    W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
+                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);
 
 
                     var that;//force proceed when clue is sent from other player
@@ -949,26 +749,26 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 frame: 'studyboardCG.htm',
                 cb: function() {
 
-                    W.setInnerHTML('b0', this.boardboard[this.roundCounter][0]),
-                    W.setInnerHTML('b1', this.boardboard[this.roundCounter][1]);
-                    W.setInnerHTML('b2', this.boardboard[this.roundCounter][2]);
-                    W.setInnerHTML('b3', this.boardboard[this.roundCounter][3]);
-                    W.setInnerHTML('b4', this.boardboard[this.roundCounter][4]);
-                    W.setInnerHTML('b5', this.boardboard[this.roundCounter][5]);
-                    W.setInnerHTML('b6', this.boardboard[this.roundCounter][6]);
-                    W.setInnerHTML('b7', this.boardboard[this.roundCounter][7]);
-                    W.setInnerHTML('b8', this.boardboard[this.roundCounter][8]);
-                    W.setInnerHTML('b9', this.boardboard[this.roundCounter][9]);
-                    W.setInnerHTML('b10', this.boardboard[this.roundCounter][10]);
-                    W.setInnerHTML('b11', this.boardboard[this.roundCounter][11]);
-                    W.setInnerHTML('b12', this.boardboard[this.roundCounter][12]);
-                    W.setInnerHTML('b13', this.boardboard[this.roundCounter][13]);
-                    W.setInnerHTML('b14', this.boardboard[this.roundCounter][14]);
-                    W.setInnerHTML('b15', this.boardboard[this.roundCounter][15]);
-                    W.setInnerHTML('b16', this.boardboard[this.roundCounter][16]);
-                    W.setInnerHTML('b17', this.boardboard[this.roundCounter][17]);
-                    W.setInnerHTML('b18', this.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', this.boardboard[this.roundCounter][19]);
+                    W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
+                    W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
+                    W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
+                    W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
+                    W.setInnerHTML('b4', node.game.settings.boardboard[this.roundCounter][4]);
+                    W.setInnerHTML('b5', node.game.settings.boardboard[this.roundCounter][5]);
+                    W.setInnerHTML('b6', node.game.settings.boardboard[this.roundCounter][6]);
+                    W.setInnerHTML('b7', node.game.settings.boardboard[this.roundCounter][7]);
+                    W.setInnerHTML('b8', node.game.settings.boardboard[this.roundCounter][8]);
+                    W.setInnerHTML('b9', node.game.settings.boardboard[this.roundCounter][9]);
+                    W.setInnerHTML('b10', node.game.settings.boardboard[this.roundCounter][10]);
+                    W.setInnerHTML('b11', node.game.settings.boardboard[this.roundCounter][11]);
+                    W.setInnerHTML('b12', node.game.settings.boardboard[this.roundCounter][12]);
+                    W.setInnerHTML('b13', node.game.settings.boardboard[this.roundCounter][13]);
+                    W.setInnerHTML('b14', node.game.settings.boardboard[this.roundCounter][14]);
+                    W.setInnerHTML('b15', node.game.settings.boardboard[this.roundCounter][15]);
+                    W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
+                    W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
+                    W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
+                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);
 
 
                     var that;//force proceed when guess is sent from other player
@@ -987,26 +787,26 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 doneButton: false,
                 cb: function() {
 
-                    W.setInnerHTML('b0', this.boardboard[this.roundCounter][0]),
-                    W.setInnerHTML('b1', this.boardboard[this.roundCounter][1]);
-                    W.setInnerHTML('b2', this.boardboard[this.roundCounter][2]);
-                    W.setInnerHTML('b3', this.boardboard[this.roundCounter][3]);
-                    W.setInnerHTML('b4', this.boardboard[this.roundCounter][4]);
-                    W.setInnerHTML('b5', this.boardboard[this.roundCounter][5]);
-                    W.setInnerHTML('b6', this.boardboard[this.roundCounter][6]);
-                    W.setInnerHTML('b7', this.boardboard[this.roundCounter][7]);
-                    W.setInnerHTML('b8', this.boardboard[this.roundCounter][8]);
-                    W.setInnerHTML('b9', this.boardboard[this.roundCounter][9]);
-                    W.setInnerHTML('b10', this.boardboard[this.roundCounter][10]);
-                    W.setInnerHTML('b11', this.boardboard[this.roundCounter][11]);
-                    W.setInnerHTML('b12', this.boardboard[this.roundCounter][12]);
-                    W.setInnerHTML('b13', this.boardboard[this.roundCounter][13]);
-                    W.setInnerHTML('b14', this.boardboard[this.roundCounter][14]);
-                    W.setInnerHTML('b15', this.boardboard[this.roundCounter][15]);
-                    W.setInnerHTML('b16', this.boardboard[this.roundCounter][16]);
-                    W.setInnerHTML('b17', this.boardboard[this.roundCounter][17]);
-                    W.setInnerHTML('b18', this.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', this.boardboard[this.roundCounter][19]);
+                    W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
+                    W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
+                    W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
+                    W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
+                    W.setInnerHTML('b4', node.game.settings.boardboard[this.roundCounter][4]);
+                    W.setInnerHTML('b5', node.game.settings.boardboard[this.roundCounter][5]);
+                    W.setInnerHTML('b6', node.game.settings.boardboard[this.roundCounter][6]);
+                    W.setInnerHTML('b7', node.game.settings.boardboard[this.roundCounter][7]);
+                    W.setInnerHTML('b8', node.game.settings.boardboard[this.roundCounter][8]);
+                    W.setInnerHTML('b9', node.game.settings.boardboard[this.roundCounter][9]);
+                    W.setInnerHTML('b10', node.game.settings.boardboard[this.roundCounter][10]);
+                    W.setInnerHTML('b11', node.game.settings.boardboard[this.roundCounter][11]);
+                    W.setInnerHTML('b12', node.game.settings.boardboard[this.roundCounter][12]);
+                    W.setInnerHTML('b13', node.game.settings.boardboard[this.roundCounter][13]);
+                    W.setInnerHTML('b14', node.game.settings.boardboard[this.roundCounter][14]);
+                    W.setInnerHTML('b15', node.game.settings.boardboard[this.roundCounter][15]);
+                    W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
+                    W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
+                    W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
+                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);
 
 
                     if(this.smallRoundCounter==0){//show clue given by other player
@@ -1110,26 +910,26 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 frame: 'studyboardCG.htm',
                 cb: function() {
 
-                    W.setInnerHTML('b0', this.boardboard[this.roundCounter][0]),
-                    W.setInnerHTML('b1', this.boardboard[this.roundCounter][1]);
-                    W.setInnerHTML('b2', this.boardboard[this.roundCounter][2]);
-                    W.setInnerHTML('b3', this.boardboard[this.roundCounter][3]);
-                    W.setInnerHTML('b4', this.boardboard[this.roundCounter][4]);
-                    W.setInnerHTML('b5', this.boardboard[this.roundCounter][5]);
-                    W.setInnerHTML('b6', this.boardboard[this.roundCounter][6]);
-                    W.setInnerHTML('b7', this.boardboard[this.roundCounter][7]);
-                    W.setInnerHTML('b8', this.boardboard[this.roundCounter][8]);
-                    W.setInnerHTML('b9', this.boardboard[this.roundCounter][9]);
-                    W.setInnerHTML('b10', this.boardboard[this.roundCounter][10]);
-                    W.setInnerHTML('b11', this.boardboard[this.roundCounter][11]);
-                    W.setInnerHTML('b12', this.boardboard[this.roundCounter][12]);
-                    W.setInnerHTML('b13', this.boardboard[this.roundCounter][13]);
-                    W.setInnerHTML('b14', this.boardboard[this.roundCounter][14]);
-                    W.setInnerHTML('b15', this.boardboard[this.roundCounter][15]);
-                    W.setInnerHTML('b16', this.boardboard[this.roundCounter][16]);
-                    W.setInnerHTML('b17', this.boardboard[this.roundCounter][17]);
-                    W.setInnerHTML('b18', this.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', this.boardboard[this.roundCounter][19]);
+                    W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
+                    W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
+                    W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
+                    W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
+                    W.setInnerHTML('b4', node.game.settings.boardboard[this.roundCounter][4]);
+                    W.setInnerHTML('b5', node.game.settings.boardboard[this.roundCounter][5]);
+                    W.setInnerHTML('b6', node.game.settings.boardboard[this.roundCounter][6]);
+                    W.setInnerHTML('b7', node.game.settings.boardboard[this.roundCounter][7]);
+                    W.setInnerHTML('b8', node.game.settings.boardboard[this.roundCounter][8]);
+                    W.setInnerHTML('b9', node.game.settings.boardboard[this.roundCounter][9]);
+                    W.setInnerHTML('b10', node.game.settings.boardboard[this.roundCounter][10]);
+                    W.setInnerHTML('b11', node.game.settings.boardboard[this.roundCounter][11]);
+                    W.setInnerHTML('b12', node.game.settings.boardboard[this.roundCounter][12]);
+                    W.setInnerHTML('b13', node.game.settings.boardboard[this.roundCounter][13]);
+                    W.setInnerHTML('b14', node.game.settings.boardboard[this.roundCounter][14]);
+                    W.setInnerHTML('b15', node.game.settings.boardboard[this.roundCounter][15]);
+                    W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
+                    W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
+                    W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
+                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);
 
 
                     var that;//receives two messages, one for each guessed word. ends after receiving the second one
@@ -1149,26 +949,26 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 donebutton: false,
                 cb: function() {
                     W.setInnerHTML('clue2', "Please select your FINAL guesses." ),
-                    W.setInnerHTML('b0', this.boardboard[this.roundCounter][0]),
-                    W.setInnerHTML('b1', this.boardboard[this.roundCounter][1]);
-                    W.setInnerHTML('b2', this.boardboard[this.roundCounter][2]);
-                    W.setInnerHTML('b3', this.boardboard[this.roundCounter][3]);
-                    W.setInnerHTML('b4', this.boardboard[this.roundCounter][4]);
-                    W.setInnerHTML('b5', this.boardboard[this.roundCounter][5]);
-                    W.setInnerHTML('b6', this.boardboard[this.roundCounter][6]);
-                    W.setInnerHTML('b7', this.boardboard[this.roundCounter][7]);
-                    W.setInnerHTML('b8', this.boardboard[this.roundCounter][8]);
-                    W.setInnerHTML('b9', this.boardboard[this.roundCounter][9]);
-                    W.setInnerHTML('b10', this.boardboard[this.roundCounter][10]);
-                    W.setInnerHTML('b11', this.boardboard[this.roundCounter][11]);
-                    W.setInnerHTML('b12', this.boardboard[this.roundCounter][12]);
-                    W.setInnerHTML('b13', this.boardboard[this.roundCounter][13]);
-                    W.setInnerHTML('b14', this.boardboard[this.roundCounter][14]);
-                    W.setInnerHTML('b15', this.boardboard[this.roundCounter][15]);
-                    W.setInnerHTML('b16', this.boardboard[this.roundCounter][16]);
-                    W.setInnerHTML('b17', this.boardboard[this.roundCounter][17]);
-                    W.setInnerHTML('b18', this.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', this.boardboard[this.roundCounter][19]);
+                    W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
+                    W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
+                    W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
+                    W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
+                    W.setInnerHTML('b4', node.game.settings.boardboard[this.roundCounter][4]);
+                    W.setInnerHTML('b5', node.game.settings.boardboard[this.roundCounter][5]);
+                    W.setInnerHTML('b6', node.game.settings.boardboard[this.roundCounter][6]);
+                    W.setInnerHTML('b7', node.game.settings.boardboard[this.roundCounter][7]);
+                    W.setInnerHTML('b8', node.game.settings.boardboard[this.roundCounter][8]);
+                    W.setInnerHTML('b9', node.game.settings.boardboard[this.roundCounter][9]);
+                    W.setInnerHTML('b10', node.game.settings.boardboard[this.roundCounter][10]);
+                    W.setInnerHTML('b11', node.game.settings.boardboard[this.roundCounter][11]);
+                    W.setInnerHTML('b12', node.game.settings.boardboard[this.roundCounter][12]);
+                    W.setInnerHTML('b13', node.game.settings.boardboard[this.roundCounter][13]);
+                    W.setInnerHTML('b14', node.game.settings.boardboard[this.roundCounter][14]);
+                    W.setInnerHTML('b15', node.game.settings.boardboard[this.roundCounter][15]);
+                    W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
+                    W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
+                    W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
+                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);
 
                     this.answerCounter = 0;
 
@@ -1232,7 +1032,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     var myDiv = W.getElementById("cganswers");
                     var myDiv2 = W.getElementById("cgcorrect");
                     var myDiv3 = W.getElementById("cgnextstep");
-                    if(this.pairList[this.roundCounter].includes(this.guess1Received)&&this.pairList[this.roundCounter].includes(this.guess2Received)){//if they were correct it ends the stage and moves on to the next word pair
+                    if(node.game.settings.pairList[this.roundCounter].includes(this.guess1Received)&&node.game.settings.pairList[this.roundCounter].includes(this.guess2Received)){//if they were correct it ends the stage and moves on to the next word pair
                         myDiv.innerHTML = "The Guesser responded with " + this.guess1Received + " and " + this.guess2Received + " which is CORRECT!";
                         myDiv2.innerHTML = "You will now move on to the next word pair. Please click Done.";
                         myDiv3.innerHTML = "";
@@ -1247,13 +1047,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         }
                         this.smallRoundCounter = 0;
 
-                        if(this.roundCounter == this.pairnumber){//if the next value is equal to number of pairs then we are out of pairs and the experiment is over
+                        if(this.roundCounter == node.game.settings.pairnumber){//if the next value is equal to number of pairs then we are out of pairs and the experiment is over
                             node.say('END_GAME', 'SERVER', true);
                         }
                     }
                     else if(this.smallRoundCounter == 2){//if this is the third trial the players did not get the word and we move to the next word pair
                         myDiv.innerHTML = "The Guesser responded with " + this.guess1Received + " and " + this.guess2Received + " which is INCORRECT!";
-                        myDiv2.innerHTML = "You have exhausted your three attempts. The correct words were " + this.pairList[this.roundCounter][0] + " and " + this.pairList[this.roundCounter][1] + ".";
+                        myDiv2.innerHTML = "You have exhausted your three attempts. The correct words were " + node.game.settings.pairList[this.roundCounter][0] + " and " + node.game.settings.pairList[this.roundCounter][1] + ".";
                         myDiv3.innerHTML = "You will now move on to the next word pair. Please click Done.";
                         this.roundCounter += 1;
                         this.randomOrder = Math.floor(Math.random()*2)//randomize the order of target words for the clue-giver
@@ -1266,7 +1066,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         }
                         this.smallRoundCounter = 0;
 
-                        if(this.roundCounter == this.pairnumber){//if the next value is equal to number of pairs then we are out of pairs and the experiment is over
+                        if(this.roundCounter == node.game.settings.pairnumber){//if the next value is equal to number of pairs then we are out of pairs and the experiment is over
                             node.say('END_GAME', 'SERVER', true);
                         }
                     }
@@ -1287,7 +1087,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     var myDiv = W.getElementById("ganswers");
                     var myDiv2 = W.getElementById("gcorrect");
                     var myDiv3 = W.getElementById("gnextstep");
-                    if(this.pairList[this.roundCounter].includes(guess1TXT)&&this.pairList[this.roundCounter].includes(guess2TXT)){//if they were correct it ends the stage and moves on to the next word pair
+                    if(node.game.settings.pairList[this.roundCounter].includes(guess1TXT)&&node.game.settings.pairList[this.roundCounter].includes(guess2TXT)){//if they were correct it ends the stage and moves on to the next word pair
                         myDiv.innerHTML = "You responded with " + guess1TXT + " and " + guess2TXT + " which is CORRECT!";
                         myDiv2.innerHTML = "You will now move on to the next word pair. Please click Done.";
                         myDiv3.innerHTML = "";
@@ -1300,13 +1100,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                             this.cluespast.pop();
                         }
                         this.smallRoundCounter = 0;
-                        if(this.roundCounter == this.pairnumber){//if the next value is equal to number of pairs then we are out of pairs and the experiment is over
+                        if(this.roundCounter == node.game.settings.pairnumber){//if the next value is equal to number of pairs then we are out of pairs and the experiment is over
                             node.say('END_GAME', 'SERVER', true);
                         }
                     }
                     else if(this.smallRoundCounter == 2){//if this is the third trial the players did not get the word and we move to the next word pair
                         myDiv.innerHTML = "You responded with " + guess1TXT + " and " + guess2TXT + " which is INCORRECT!";
-                        myDiv2.innerHTML = "You have exhausted your three attempts. The correct words were " + this.pairList[this.roundCounter][0] + " and " + this.pairList[this.roundCounter][1] + ".";
+                        myDiv2.innerHTML = "You have exhausted your three attempts. The correct words were " + node.game.settings.pairList[this.roundCounter][0] + " and " + node.game.settings.pairList[this.roundCounter][1] + ".";
                         myDiv3.innerHTML = "You will now move on to the next word pair. Please click Done.";
                         this.roundCounter += 1;
                         if(this.roundcounter%3 == 0){
@@ -1317,7 +1117,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                             this.cluespast.pop();
                         }
                         this.smallRoundCounter = 0;
-                        if(this.roundCounter == this.pairnumber){//if the next value is equal to number of pairs then we are out of pairs and the experiment is over
+                        if(this.roundCounter == node.game.settings.pairnumber){//if the next value is equal to number of pairs then we are out of pairs and the experiment is over
                             node.say('END_GAME', 'SERVER', true);
                         }
                     }

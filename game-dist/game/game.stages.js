@@ -9,7 +9,7 @@
  * ---
  */
 
-module.exports = function(stager, settings) {
+module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     stager.stage('consent');
     stager.stage('idGet');
     stager.stage('instructions');
