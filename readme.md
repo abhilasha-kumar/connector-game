@@ -16,4 +16,4 @@ appropriate directory for nodeGame)
 ## Developer Notes
 
 * game/client_types/player.js - the bulk of the game logic is here
-* game/game.settings.js - game configuration
+* game/game.settings.js - game configuration; could use treatments to change these at runtime
