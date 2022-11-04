@@ -15,8 +15,28 @@
  * ---
  */
 
+// Copied from StackOverflow:
+// https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+// https://en.wikipedia.org/wiki/Schwartzian_transform
+const shuffle = (unshuffled) => {
+    let shuffled = unshuffled
+    .map(value => ({ value, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ value }) => value);
 
- var board0 = ["SMELL","FAMILY","BLOW","AMP","TANK","BIRTHDAY","PUNISHMENT","HELICOPTER","BLAME",
+    return shuffled;
+};
+
+// shuffles the array of lists
+const shuffleBoard = (boards) => {
+    boards.forEach( (board, index) => boards[index] = shuffle(board));
+    return boards;
+};
+
+// true/false - randomize the words in the lists
+const RANDOMIZE_WORD_LISTS = true;
+
+var board0 = ["SMELL","FAMILY","BLOW","AMP","TANK","BIRTHDAY","PUNISHMENT","HELICOPTER","BLAME",
         "FIB","EYES","WEEP","THIRST","FOLLOWER","ANTIDOTE","PIE","BLAZE","LEAP","DATE","NAVY"];
 var board1 = ["BENCH","GLOW","SUNNY","IDIOT","QUICK","ANALYZE","BEAM","CAVE","OAK","RED","ROBIN",
     "TREE","FIRM","CUT","RUN","KNIGHT","TRIM","SITE","BIRD","MONTH"];
@@ -54,6 +74,13 @@ var board17 = ["TOUGH","KEY","WORST","WAG","BADGE","SOIL","WARM","SHELF","WRITE"
     "ANGLE","BEST","WOOL","DIRT","TAIL","SAGE","TREAT","SKILL"];
 var board18 = ["CREDIT","FROG","MOLE","JUNK","LEASE","GAME","VINE","SHOP","GRAPE","JUICE","SPELL",
     "SPIDER","OAR","JOIN","SKY","CROAK","WRONG","TAN","CARD","FUSE"];
+
+var boards = [board0, board0, board0, board1, board1, board1, board2, board2, board2, board3, 
+    board3, board3, board4, board4, board4, board5, board5, board5, board6, board6, board6, 
+    board7, board7, board7, board8, board8, board8, board9, board9, board9, board10, board10, 
+    board10, board11, board11, board11,
+    board12, board12, board12, board13, board13, board13, board14, board14, board14, board15, 
+    board15, board15, board16, board16, board16, board17, board17, board17, board18, board18, board18];    
 
 var pair0 = ["BLOW","BLAZE"];
 var pair1 = ["SMELL","EYES"];
@@ -155,12 +182,7 @@ module.exports = {
     // cheating, re-set the dictator's offer to this value.
     defaultOffer: 100,
 
-    boardboard: [board0, board0, board0, board1, board1, board1, board2, board2, board2, board3, 
-        board3, board3, board4, board4, board4, board5, board5, board5, board6, board6, board6, 
-        board7, board7, board7, board8, board8, board8, board9, board9, board9, board10, board10, 
-        board10, board11, board11, board11,
-        board12, board12, board12, board13, board13, board13, board14, board14, board14, board15, 
-        board15, board15, board16, board16, board16, board17, board17, board17, board18, board18, board18],
+    boardboard: RANDOMIZE_WORD_LISTS ? shuffleBoard(boards): boards,
 
     pairList: [pair0,pair1,pair2,pair3,pair4,pair5,pair6,pair7,pair8,pair9,pair10,pair11,pair12,
         pair13,pair14,pair15,pair16,pair17,pair18,pair19,pair20,pair21,pair22,pair23,pair24,pair25,
@@ -170,8 +192,6 @@ module.exports = {
 
     pairnumber: 33, // the number of pairs in the total experiment, should be 57
     pracpairnumber: 3,
-
-    randomizeWords: false, // true/false - randomize order of words on the board
 
     // # Treatments definition.
 
