@@ -258,26 +258,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 frame: 'studyboard.htm',
 
                 cb: function() {
-                    /*W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
-                    W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
-                    W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
-                    W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
-                    W.setInnerHTML('b4', node.game.settings.boardboard[this.roundCounter][4]);
-                    W.setInnerHTML('b5', node.game.settings.boardboard[this.roundCounter][5]);
-                    W.setInnerHTML('b6', node.game.settings.boardboard[this.roundCounter][6]);
-                    W.setInnerHTML('b7', node.game.settings.boardboard[this.roundCounter][7]);
-                    W.setInnerHTML('b8', node.game.settings.boardboard[this.roundCounter][8]);
-                    W.setInnerHTML('b9', node.game.settings.boardboard[this.roundCounter][9]);
-                    W.setInnerHTML('b10', node.game.settings.boardboard[this.roundCounter][10]);
-                    W.setInnerHTML('b11', node.game.settings.boardboard[this.roundCounter][11]);
-                    W.setInnerHTML('b12', node.game.settings.boardboard[this.roundCounter][12]);
-                    W.setInnerHTML('b13', node.game.settings.boardboard[this.roundCounter][13]);
-                    W.setInnerHTML('b14', node.game.settings.boardboard[this.roundCounter][14]);
-                    W.setInnerHTML('b15', node.game.settings.boardboard[this.roundCounter][15]);
-                    W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
-                    W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
-                    W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);*/
 
                     node.game.buildGrid('sbrd', this.roundCounter);
 
@@ -306,27 +286,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 donebutton: false,
                 frame: 'studyboardCG.htm',
                 cb: function() {
-
-                    /*W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
-                    W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
-                    W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
-                    W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
-                    W.setInnerHTML('b4', node.game.settings.boardboard[this.roundCounter][4]);
-                    W.setInnerHTML('b5', node.game.settings.boardboard[this.roundCounter][5]);
-                    W.setInnerHTML('b6', node.game.settings.boardboard[this.roundCounter][6]);
-                    W.setInnerHTML('b7', node.game.settings.boardboard[this.roundCounter][7]);
-                    W.setInnerHTML('b8', node.game.settings.boardboard[this.roundCounter][8]);
-                    W.setInnerHTML('b9', node.game.settings.boardboard[this.roundCounter][9]);
-                    W.setInnerHTML('b10', node.game.settings.boardboard[this.roundCounter][10]);
-                    W.setInnerHTML('b11', node.game.settings.boardboard[this.roundCounter][11]);
-                    W.setInnerHTML('b12', node.game.settings.boardboard[this.roundCounter][12]);
-                    W.setInnerHTML('b13', node.game.settings.boardboard[this.roundCounter][13]);
-                    W.setInnerHTML('b14', node.game.settings.boardboard[this.roundCounter][14]);
-                    W.setInnerHTML('b15', node.game.settings.boardboard[this.roundCounter][15]);
-                    W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
-                    W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
-                    W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);*/
                     
                     node.game.buildGrid('sbrd', this.roundCounter);
 
@@ -348,27 +307,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 frame: 'guessesboard.htm',
                 donebutton: false,
                 cb: function() {
-
-                    /*W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
-                    W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
-                    W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
-                    W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
-                    W.setInnerHTML('b4', node.game.settings.boardboard[this.roundCounter][4]);
-                    W.setInnerHTML('b5', node.game.settings.boardboard[this.roundCounter][5]);
-                    W.setInnerHTML('b6', node.game.settings.boardboard[this.roundCounter][6]);
-                    W.setInnerHTML('b7', node.game.settings.boardboard[this.roundCounter][7]);
-                    W.setInnerHTML('b8', node.game.settings.boardboard[this.roundCounter][8]);
-                    W.setInnerHTML('b9', node.game.settings.boardboard[this.roundCounter][9]);
-                    W.setInnerHTML('b10', node.game.settings.boardboard[this.roundCounter][10]);
-                    W.setInnerHTML('b11', node.game.settings.boardboard[this.roundCounter][11]);
-                    W.setInnerHTML('b12', node.game.settings.boardboard[this.roundCounter][12]);
-                    W.setInnerHTML('b13', node.game.settings.boardboard[this.roundCounter][13]);
-                    W.setInnerHTML('b14', node.game.settings.boardboard[this.roundCounter][14]);
-                    W.setInnerHTML('b15', node.game.settings.boardboard[this.roundCounter][15]);
-                    W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
-                    W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
-                    W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);*/
 
                     node.game.buildGrid('gbrd', this.roundCounter);
 
@@ -394,24 +332,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     }
 
                     var el = W.getElementById("gbrd");
-                    /*this.clicker = function (e){//add event listener to record button presses of game board
-                        var target = e.target;
-                        var myDiv = W.getElementById("glist");
-                        if(target.className.match("button button1")){
-                        myDiv.innerHTML = myDiv.innerHTML+ target.innerHTML+", ";
-                        node.game.doneButton.enable();
-
-                            node.game.memory.add({
-                                player: node.player.id,
-                                stage: node.game.getCurrentGameStage(),
-                                GuessOptions: target.innerHTML,
-                                GUESS_OPTIONS_TIME: node.timer.getTimeSince('step'),
-                                customTimeStamp: node.timer.getTimeSince('start')
-                            });
-                        }
-
-
-                    };*/
 
                     el.addEventListener('click', node.game.guessClickHandler); //add event listener
                 },
@@ -478,27 +398,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 donebutton: false,
                 frame: 'studyboardCG.htm',
                 cb: function() {
-
-                    /*W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
-                    W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
-                    W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
-                    W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
-                    W.setInnerHTML('b4', node.game.settings.boardboard[this.roundCounter][4]);
-                    W.setInnerHTML('b5', node.game.settings.boardboard[this.roundCounter][5]);
-                    W.setInnerHTML('b6', node.game.settings.boardboard[this.roundCounter][6]);
-                    W.setInnerHTML('b7', node.game.settings.boardboard[this.roundCounter][7]);
-                    W.setInnerHTML('b8', node.game.settings.boardboard[this.roundCounter][8]);
-                    W.setInnerHTML('b9', node.game.settings.boardboard[this.roundCounter][9]);
-                    W.setInnerHTML('b10', node.game.settings.boardboard[this.roundCounter][10]);
-                    W.setInnerHTML('b11', node.game.settings.boardboard[this.roundCounter][11]);
-                    W.setInnerHTML('b12', node.game.settings.boardboard[this.roundCounter][12]);
-                    W.setInnerHTML('b13', node.game.settings.boardboard[this.roundCounter][13]);
-                    W.setInnerHTML('b14', node.game.settings.boardboard[this.roundCounter][14]);
-                    W.setInnerHTML('b15', node.game.settings.boardboard[this.roundCounter][15]);
-                    W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
-                    W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
-                    W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);*/
                     node.game.buildGrid('sbrd', this.roundCounter);
 
 
@@ -519,26 +418,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 donebutton: false,
                 cb: function() {
                     W.setInnerHTML('clue2', "Please select your FINAL guesses." ),
-                    /*W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
-                    W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
-                    W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
-                    W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
-                    W.setInnerHTML('b4', node.game.settings.boardboard[this.roundCounter][4]);
-                    W.setInnerHTML('b5', node.game.settings.boardboard[this.roundCounter][5]);
-                    W.setInnerHTML('b6', node.game.settings.boardboard[this.roundCounter][6]);
-                    W.setInnerHTML('b7', node.game.settings.boardboard[this.roundCounter][7]);
-                    W.setInnerHTML('b8', node.game.settings.boardboard[this.roundCounter][8]);
-                    W.setInnerHTML('b9', node.game.settings.boardboard[this.roundCounter][9]);
-                    W.setInnerHTML('b10', node.game.settings.boardboard[this.roundCounter][10]);
-                    W.setInnerHTML('b11', node.game.settings.boardboard[this.roundCounter][11]);
-                    W.setInnerHTML('b12', node.game.settings.boardboard[this.roundCounter][12]);
-                    W.setInnerHTML('b13', node.game.settings.boardboard[this.roundCounter][13]);
-                    W.setInnerHTML('b14', node.game.settings.boardboard[this.roundCounter][14]);
-                    W.setInnerHTML('b15', node.game.settings.boardboard[this.roundCounter][15]);
-                    W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
-                    W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
-                    W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);*/
 
                     node.game.buildGrid('gbrd', this.roundCounter);
 
@@ -686,27 +565,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     console.log('Loading clue board ...');
                     W.setInnerHTML('containerbottom2', "Please type your FINAL clue below and click Done:"),
 
-                    /*W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
-                    W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
-                    W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
-                    W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
-                    W.setInnerHTML('b4', node.game.settings.boardboard[this.roundCounter][4]);
-                    W.setInnerHTML('b5', node.game.settings.boardboard[this.roundCounter][5]);
-                    W.setInnerHTML('b6', node.game.settings.boardboard[this.roundCounter][6]);
-                    W.setInnerHTML('b7', node.game.settings.boardboard[this.roundCounter][7]);
-                    W.setInnerHTML('b8', node.game.settings.boardboard[this.roundCounter][8]);
-                    W.setInnerHTML('b9', node.game.settings.boardboard[this.roundCounter][9]);
-                    W.setInnerHTML('b10', node.game.settings.boardboard[this.roundCounter][10]);
-                    W.setInnerHTML('b11', node.game.settings.boardboard[this.roundCounter][11]);
-                    W.setInnerHTML('b12', node.game.settings.boardboard[this.roundCounter][12]);
-                    W.setInnerHTML('b13', node.game.settings.boardboard[this.roundCounter][13]);
-                    W.setInnerHTML('b14', node.game.settings.boardboard[this.roundCounter][14]);
-                    W.setInnerHTML('b15', node.game.settings.boardboard[this.roundCounter][15]);
-                    W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
-                    W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
-                    W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);*/
-
                     node.game.buildGrid('cbrd', this.roundCounter);
 
                     W.setInnerHTML('trgtWords', node.game.settings.pairList[this.roundCounter][this.randomOrder] + 
@@ -749,26 +607,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 frame: 'studyboard.htm',
 
                 cb: function() {
-                    /*W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
-                    W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
-                    W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
-                    W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
-                    W.setInnerHTML('b4', node.game.settings.boardboard[this.roundCounter][4]);
-                    W.setInnerHTML('b5', node.game.settings.boardboard[this.roundCounter][5]);
-                    W.setInnerHTML('b6', node.game.settings.boardboard[this.roundCounter][6]);
-                    W.setInnerHTML('b7', node.game.settings.boardboard[this.roundCounter][7]);
-                    W.setInnerHTML('b8', node.game.settings.boardboard[this.roundCounter][8]);
-                    W.setInnerHTML('b9', node.game.settings.boardboard[this.roundCounter][9]);
-                    W.setInnerHTML('b10', node.game.settings.boardboard[this.roundCounter][10]);
-                    W.setInnerHTML('b11', node.game.settings.boardboard[this.roundCounter][11]);
-                    W.setInnerHTML('b12', node.game.settings.boardboard[this.roundCounter][12]);
-                    W.setInnerHTML('b13', node.game.settings.boardboard[this.roundCounter][13]);
-                    W.setInnerHTML('b14', node.game.settings.boardboard[this.roundCounter][14]);
-                    W.setInnerHTML('b15', node.game.settings.boardboard[this.roundCounter][15]);
-                    W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
-                    W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
-                    W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);*/
 
                     node.game.buildGrid('sbrd', this.roundCounter);
 
@@ -798,26 +636,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 frame: 'studyboardCG.htm',
                 cb: function() {
 
-                    /*W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
-                    W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
-                    W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
-                    W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
-                    W.setInnerHTML('b4', node.game.settings.boardboard[this.roundCounter][4]);
-                    W.setInnerHTML('b5', node.game.settings.boardboard[this.roundCounter][5]);
-                    W.setInnerHTML('b6', node.game.settings.boardboard[this.roundCounter][6]);
-                    W.setInnerHTML('b7', node.game.settings.boardboard[this.roundCounter][7]);
-                    W.setInnerHTML('b8', node.game.settings.boardboard[this.roundCounter][8]);
-                    W.setInnerHTML('b9', node.game.settings.boardboard[this.roundCounter][9]);
-                    W.setInnerHTML('b10', node.game.settings.boardboard[this.roundCounter][10]);
-                    W.setInnerHTML('b11', node.game.settings.boardboard[this.roundCounter][11]);
-                    W.setInnerHTML('b12', node.game.settings.boardboard[this.roundCounter][12]);
-                    W.setInnerHTML('b13', node.game.settings.boardboard[this.roundCounter][13]);
-                    W.setInnerHTML('b14', node.game.settings.boardboard[this.roundCounter][14]);
-                    W.setInnerHTML('b15', node.game.settings.boardboard[this.roundCounter][15]);
-                    W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
-                    W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
-                    W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);*/
 
                     node.game.buildGrid('sbrd', this.roundCounter);
 
@@ -839,27 +657,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 frame: 'guessesboard.htm',
                 doneButton: false,
                 cb: function() {
-
-                    /*W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
-                    W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
-                    W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
-                    W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
-                    W.setInnerHTML('b4', node.game.settings.boardboard[this.roundCounter][4]);
-                    W.setInnerHTML('b5', node.game.settings.boardboard[this.roundCounter][5]);
-                    W.setInnerHTML('b6', node.game.settings.boardboard[this.roundCounter][6]);
-                    W.setInnerHTML('b7', node.game.settings.boardboard[this.roundCounter][7]);
-                    W.setInnerHTML('b8', node.game.settings.boardboard[this.roundCounter][8]);
-                    W.setInnerHTML('b9', node.game.settings.boardboard[this.roundCounter][9]);
-                    W.setInnerHTML('b10', node.game.settings.boardboard[this.roundCounter][10]);
-                    W.setInnerHTML('b11', node.game.settings.boardboard[this.roundCounter][11]);
-                    W.setInnerHTML('b12', node.game.settings.boardboard[this.roundCounter][12]);
-                    W.setInnerHTML('b13', node.game.settings.boardboard[this.roundCounter][13]);
-                    W.setInnerHTML('b14', node.game.settings.boardboard[this.roundCounter][14]);
-                    W.setInnerHTML('b15', node.game.settings.boardboard[this.roundCounter][15]);
-                    W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
-                    W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
-                    W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);*/
 
                     node.game.buildGrid('gbrd', this.roundCounter);
 
@@ -884,21 +681,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     }
 
                     var el = W.getElementById("gbrd");
-                    /*this.clicker = function (e){//add event listener to record button presses of game board
-                        var target = e.target;
-                        var myDiv = W.getElementById("glist");
-                        if(target.className.match("button button1")){
-                        myDiv.innerHTML = myDiv.innerHTML+ target.innerHTML+", ";
-                        node.game.doneButton.enable();
-                        node.game.memory.add({
-                            player: node.player.id,
-                            stage: node.game.getCurrentGameStage(),
-                            GuessOptions: target.innerHTML,
-                            GUESS_OPTIONS_TIME: node.timer.getTimeSince('step'),
-                            customTimeStamp: node.timer.getTimeSince('start')
-                        });
-                    }
-                    };*/
 
                     el.addEventListener('click', node.game.guessClickHandler);//add event listener
                 },
@@ -966,27 +748,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 frame: 'studyboardCG.htm',
                 cb: function() {
 
-                    /*W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
-                    W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
-                    W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
-                    W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
-                    W.setInnerHTML('b4', node.game.settings.boardboard[this.roundCounter][4]);
-                    W.setInnerHTML('b5', node.game.settings.boardboard[this.roundCounter][5]);
-                    W.setInnerHTML('b6', node.game.settings.boardboard[this.roundCounter][6]);
-                    W.setInnerHTML('b7', node.game.settings.boardboard[this.roundCounter][7]);
-                    W.setInnerHTML('b8', node.game.settings.boardboard[this.roundCounter][8]);
-                    W.setInnerHTML('b9', node.game.settings.boardboard[this.roundCounter][9]);
-                    W.setInnerHTML('b10', node.game.settings.boardboard[this.roundCounter][10]);
-                    W.setInnerHTML('b11', node.game.settings.boardboard[this.roundCounter][11]);
-                    W.setInnerHTML('b12', node.game.settings.boardboard[this.roundCounter][12]);
-                    W.setInnerHTML('b13', node.game.settings.boardboard[this.roundCounter][13]);
-                    W.setInnerHTML('b14', node.game.settings.boardboard[this.roundCounter][14]);
-                    W.setInnerHTML('b15', node.game.settings.boardboard[this.roundCounter][15]);
-                    W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
-                    W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
-                    W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);*/
-
                     node.game.buildGrid('sbrd', this.roundCounter);
 
 
@@ -1010,27 +771,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 frame: 'guessesboard.htm',
                 donebutton: false,
                 cb: function() {
-                    /*W.setInnerHTML('clue2', "Please select your FINAL guesses." ),
-                    W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
-                    W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
-                    W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
-                    W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
-                    W.setInnerHTML('b4', node.game.settings.boardboard[this.roundCounter][4]);
-                    W.setInnerHTML('b5', node.game.settings.boardboard[this.roundCounter][5]);
-                    W.setInnerHTML('b6', node.game.settings.boardboard[this.roundCounter][6]);
-                    W.setInnerHTML('b7', node.game.settings.boardboard[this.roundCounter][7]);
-                    W.setInnerHTML('b8', node.game.settings.boardboard[this.roundCounter][8]);
-                    W.setInnerHTML('b9', node.game.settings.boardboard[this.roundCounter][9]);
-                    W.setInnerHTML('b10', node.game.settings.boardboard[this.roundCounter][10]);
-                    W.setInnerHTML('b11', node.game.settings.boardboard[this.roundCounter][11]);
-                    W.setInnerHTML('b12', node.game.settings.boardboard[this.roundCounter][12]);
-                    W.setInnerHTML('b13', node.game.settings.boardboard[this.roundCounter][13]);
-                    W.setInnerHTML('b14', node.game.settings.boardboard[this.roundCounter][14]);
-                    W.setInnerHTML('b15', node.game.settings.boardboard[this.roundCounter][15]);
-                    W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
-                    W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
-                    W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);*/
 
                     node.game.buildGrid('gbrd', this.roundCounter);
 
@@ -1239,7 +979,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
            });
         },
-        done: function() {//this sens all data to the logic client and stores the values
+        done: function() {//this sends all data to the logic client and stores the values
             node.set({ID: this.id}),
             node.set({RandCode: this.randomCode}),
             node.set({age : this.demosnode.getValues().items['age'].value}),
