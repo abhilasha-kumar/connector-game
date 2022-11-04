@@ -52,7 +52,106 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 }
             }
             return result;
-        }
+        };
+
+        // event listener to record button presses of game board
+        this.guessClickHandler = function (e) {
+            var tableCell = e.target;
+            
+            if (tableCell.nodeName == 'TD' && tableCell.innerText) {
+                var guessListDiv = W.getElementById("glist");
+                
+                guessListDiv.innerHTML = guessListDiv.innerText + tableCell.innerText + ", ";
+                node.game.doneButton.enable();
+
+                node.game.memory.add({
+                    player: node.player.id,
+                    stage: node.game.getCurrentGameStage(),
+                    GuessOptions: tableCell.innerText,
+                    GUESS_OPTIONS_TIME: node.timer.getTimeSince('step'),
+                    customTimeStamp: node.timer.getTimeSince('start')
+                });
+            }
+
+        };
+
+        //event listener that receives two words and then ends the step
+        this.guessClickHandler2 = function (e) {
+            var target = e.target;
+
+            node.log('Target ' + target.nodeName + ', text: ' + target.innerText);
+            
+            if (target.nodeName == 'TD' && target.innerText) {
+                var myDiv = W.getElementById("alist");
+                node.log('Final answer text: ' + myDiv.innerText);
+                
+                
+                if(myDiv.innerText.trim() == "Your final answers:"){//the condition if no word has been added, stores the first word and sends it to the partner
+                    node.log('Capturing first guess ...');
+                    myDiv.innerText = myDiv.innerText + target.innerText;
+                    node.say('GUESS1', node.game.partner, target.innerText);
+                    node.set({GUESS_1_FINAL : target.innerText});
+                    node.set({GUESS_1_FINAL_TIME : node.timer.getTimeSince('step')})
+                    node.game.memory.add({//adds the responded values to memory so we can access it later, cannot store this info in a variable since it is in an event listener
+                        player: node.player.id,
+                        stage: node.game.getCurrentGameStage(),
+                        Guess1: target.innerText
+                    });
+                    node.game.memory.tag("guess1");//tag this memory for easy access later
+
+                }
+                else if(!myDiv.innerText.includes(",")) {//the condition if 1 word has been added, stores the second word, send it to the partner, and ends the step for both players
+                    node.log('Capturing second guess ...');
+                    myDiv.innerText = myDiv.innerText + ", " + target.innerText;
+                    node.say('GUESS2', node.game.partner, target.innerText);
+                    node.set({GUESS_2_FINAL : target.innerText});
+                    node.set({GUESS_2_FINAL_TIME : node.timer.getTimeSince('step')})
+                    node.game.memory.add({
+                        player: node.player.id,
+                        stage: node.game.getCurrentGameStage(),
+                        Guess2: target.innerText
+                    });
+                    node.game.memory.tag("guess2");
+                    e.currentTarget.removeEventListener('click', node.game.guessClickHandler2);
+                    node.done();
+
+                }
+            }
+
+        };
+
+        this.buildGrid = (tableId, roundCounter) => {
+            // clear the table rows
+            var table = W.getElementById(tableId);
+            table.replaceChildren();
+
+            var gridCounter = 0;
+            // add table rows and populate from board array
+            for(let y=0; y < node.game.settings.BOARD_DIMENSIONS.y; y++) {
+                var row = table.insertRow(y);
+                for(let x=0; x < node.game.settings.BOARD_DIMENSIONS.x; x++) {
+                    var cell = row.insertCell(x);
+
+                    if (node.game.settings.boardboard[roundCounter].length > gridCounter) {
+                        var word = node.game.settings.boardboard[roundCounter][gridCounter];
+                        cell.innerText = word;
+                    }
+
+                    gridCounter = gridCounter + 1;
+                }
+            };
+        };
+
+        this.clueValidation = (value) => {
+            var res;
+            res = { value: value };
+            // Custom validation (only reports about last word).
+
+            if (node.game.inArrayCaseInsensitive(value, node.game.settings.boardboard[node.game.roundCounter])) {
+                res.err = 'You have used a forbidden word: ' + value;
+            }
+            return res;
+        };
 
         this.cluespast = [];
 
@@ -114,30 +213,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             CLUEGIVER:{
                 frame: 'clueboard.htm',
                 cb: function() {
-                    W.setInnerHTML('containerbottom2', "Please type your FINAL clue below and click Done:"),
-                    W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
-                    W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
-                    W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
-                    W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
-                    W.setInnerHTML('b4', node.game.settings.boardboard[this.roundCounter][4]);
-                    W.setInnerHTML('b5', node.game.settings.boardboard[this.roundCounter][5]);
-                    W.setInnerHTML('b6', node.game.settings.boardboard[this.roundCounter][6]);
-                    W.setInnerHTML('b7', node.game.settings.boardboard[this.roundCounter][7]);
-                    W.setInnerHTML('b8', node.game.settings.boardboard[this.roundCounter][8]);
-                    W.setInnerHTML('b9', node.game.settings.boardboard[this.roundCounter][9]);
-                    W.setInnerHTML('b10', node.game.settings.boardboard[this.roundCounter][10]);
-                    W.setInnerHTML('b11', node.game.settings.boardboard[this.roundCounter][11]);
-                    W.setInnerHTML('b12', node.game.settings.boardboard[this.roundCounter][12]);
-                    W.setInnerHTML('b13', node.game.settings.boardboard[this.roundCounter][13]);
-                    W.setInnerHTML('b14', node.game.settings.boardboard[this.roundCounter][14]);
-                    W.setInnerHTML('b15', node.game.settings.boardboard[this.roundCounter][15]);
-                    W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
-                    W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
-                    W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);
+                    W.setInnerHTML('containerbottom2', "Please type your FINAL clue below and click Done:");
+
+                    node.game.buildGrid('cbrd', this.roundCounter);
+                    
                     W.setInnerHTML('trgtWords', node.game.settings.pairList[this.roundCounter][this.randomOrder] + 
                         " and " + node.game.settings.pairList[this.roundCounter][1-this.randomOrder]);
-                    node.set({target1: node.game.settings.pairList[this.roundCounter][this.randomOrder]});
+                    
+                        node.set({target1: node.game.settings.pairList[this.roundCounter][this.randomOrder]});
                     node.set({target2: node.game.settings.pairList[this.roundCounter][1-this.randomOrder]});
 
                     //This is the final clue 
@@ -148,16 +231,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                        className: 'centered',
                        root: 'cbrd',
                        requiredChoice: true,
-                       validation: function(value) {
-                           var res;
-                           res = { value: value };
-                           // Custom validation (only reports about last word).
-
-                           if (node.game.inArrayCaseInsensitive(value, node.game.settings.boardboard[node.game.roundCounter])) {
-                               res.err = 'You have used a forbidden word: ' + value;
-                           }
-                           return res;
-                       },
+                       validation: node.game.clueValidation,
                        oninput: function(res, input, that) {
                            that.validation(res, input);
                        }
@@ -184,7 +258,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 frame: 'studyboard.htm',
 
                 cb: function() {
-                    W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
+                    /*W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
                     W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
                     W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
                     W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
@@ -203,7 +277,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
                     W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
                     W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);
+                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);*/
+
+                    node.game.buildGrid('sbrd', this.roundCounter);
 
 
                     var that;//force proceed when clue is sent from other player
@@ -231,7 +307,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 frame: 'studyboardCG.htm',
                 cb: function() {
 
-                    W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
+                    /*W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
                     W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
                     W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
                     W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
@@ -250,11 +326,15 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
                     W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
                     W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);
+                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);*/
+                    
+                    node.game.buildGrid('sbrd', this.roundCounter);
 
-
-                    var that;//force proceed when guess is sent from other player
+                    var that;
+                    
+                    //force proceed when guess is sent from other player
                     if (this.guessesReceived !== null) node.done();
+                    
                     that = this;
                     node.on.data('GUESSES', function(msg) { node.done();
                         that.guessesReceived = true;
@@ -269,7 +349,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 donebutton: false,
                 cb: function() {
 
-                    W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
+                    /*W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
                     W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
                     W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
                     W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
@@ -288,7 +368,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
                     W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
                     W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);
+                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);*/
+
+                    node.game.buildGrid('gbrd', this.roundCounter);
 
 
                     //W.setInnerHTML('clue', this.clueReceived);
@@ -312,7 +394,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     }
 
                     var el = W.getElementById("gbrd");
-                    this.clicker = function (e){//add event listener to record button presses of game board
+                    /*this.clicker = function (e){//add event listener to record button presses of game board
                         var target = e.target;
                         var myDiv = W.getElementById("glist");
                         if(target.className.match("button button1")){
@@ -329,12 +411,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         }
 
 
-                    },
-                    el.addEventListener('click', this.clicker);//add event listener
+                    };*/
+
+                    el.addEventListener('click', node.game.guessClickHandler); //add event listener
                 },
                 done: function() {//send signal for other player to end step, removes event listener so that these values cannot change
                     var el = W.getElementById("gbrd");
-                    el.removeEventListener('click', this.clicker);
+                    el.removeEventListener('click', node.game.guessClickHandler);
                     node.say('GUESSES', node.game.partner);
                     var memArray = node.game.memory.select('GuessOptions').and('customTimeStamp','!in', this.optionTimeArray).fetch();
                     var i;
@@ -396,7 +479,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 frame: 'studyboardCG.htm',
                 cb: function() {
 
-                    W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
+                    /*W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
                     W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
                     W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
                     W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
@@ -415,7 +498,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
                     W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
                     W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);
+                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);*/
+                    node.game.buildGrid('sbrd', this.roundCounter);
 
 
                     var that;//receives two messages, one for each guessed word. ends after receiving the second one
@@ -435,7 +519,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 donebutton: false,
                 cb: function() {
                     W.setInnerHTML('clue2', "Please select your FINAL guesses." ),
-                    W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
+                    /*W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
                     W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
                     W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
                     W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
@@ -454,49 +538,15 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
                     W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
                     W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);
+                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);*/
+
+                    node.game.buildGrid('gbrd', this.roundCounter);
 
                     this.answerCounter = 0;
 
                     var el = W.getElementById("gbrd");
 
-
-                    this.clicker2 = function (e){//event listener that receives two words and then ends the step
-                        var target = e.target;
-                        var myDiv = W.getElementById("alist");
-                        if(target.className.match("button button1")){
-                        if(myDiv.innerHTML == " Your final answers:  "){//the condition if no word has been added, stores the first word and sends it to the partner
-                            myDiv.innerHTML = myDiv.innerHTML+ target.innerHTML;
-                            node.say('GUESS1', node.game.partner, target.innerHTML);
-                            node.set({GUESS_1_FINAL : target.innerHTML});
-                            node.set({GUESS_1_FINAL_TIME : node.timer.getTimeSince('step')})
-                            node.game.memory.add({//adds the responded values to memory so we can access it later, cannot store this info in a variable since it is in an event listener
-                                player: node.player.id,
-                                stage: node.game.getCurrentGameStage(),
-                                Guess1: target.innerHTML
-                            });
-                            node.game.memory.tag("guess1");//tag this memory for easy access later
-
-                        }
-                        else if(!myDiv.innerHTML.includes(",")) {//the condition if 1 word has been added, stores the second word, send it to the partner, and ends the step for both players
-                            myDiv.innerHTML = myDiv.innerHTML + ", " + target.innerHTML;
-                            node.say('GUESS2', node.game.partner, target.innerHTML);
-                            node.set({GUESS_2_FINAL : target.innerHTML});
-                            node.set({GUESS_2_FINAL_TIME : node.timer.getTimeSince('step')})
-                            node.game.memory.add({
-                                player: node.player.id,
-                                stage: node.game.getCurrentGameStage(),
-                                Guess2: target.innerHTML
-                            });
-                            node.game.memory.tag("guess2");
-                            el.removeEventListener('click', this.clicker2);
-                            node.done();
-
-                        }
-                    }
-
-                    }
-                    el.addEventListener('click', this.clicker2);
+                    el.addEventListener('click', node.game.guessClickHandler2);
                 },
                 done: function() {
                     node.say('GUESS', node.game.partner);
@@ -565,6 +615,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             GUESSER:{
                 frame: 'feedbackGuesser.htm',
                 cb: function() {
+                    node.log('guess1 object: ' + JSON.stringify(node.game.memory.resolveTag("guess1")));
+                    node.log('guess2 object: ' + JSON.stringify(node.game.memory.resolveTag("guess2")));
+
                     var guess1TXT = node.game.memory.resolveTag("guess1").Guess1;//use tags to get our response from memory and validate
                     var guess2TXT = node.game.memory.resolveTag("guess2").Guess2;
 
@@ -633,7 +686,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     console.log('Loading clue board ...');
                     W.setInnerHTML('containerbottom2', "Please type your FINAL clue below and click Done:"),
 
-                    W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
+                    /*W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
                     W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
                     W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
                     W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
@@ -652,9 +705,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
                     W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
                     W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);
+                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);*/
 
-                    W.setInnerHTML('trgtWords', node.game.settings.pairList[this.roundCounter][this.randomOrder] + " and " + node.game.settings.pairList[this.roundCounter][1-this.randomOrder]);
+                    node.game.buildGrid('cbrd', this.roundCounter);
+
+                    W.setInnerHTML('trgtWords', node.game.settings.pairList[this.roundCounter][this.randomOrder] + 
+                        " and " + node.game.settings.pairList[this.roundCounter][1-this.randomOrder]);
                     node.set({target1: node.game.settings.pairList[this.roundCounter][this.randomOrder]});
                     node.set({target2: node.game.settings.pairList[this.roundCounter][1-this.randomOrder]});
 
@@ -665,16 +721,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                        className: 'centered',
                        root: 'cbrd',
                        requiredChoice: true,
-                       validation: function(value) {
-                           var res;
-                           res = { value: value };
-                           // Custom validation (only reports about last word).
-                           console.log('Validating: ' + value);
-                           if (node.game.inArrayCaseInsensitive(value, node.game.boardboard[node.game.roundCounter])) {
-                               res.err = 'You have used a forbidden word: ' + value;
-                           }
-                           return res;
-                       },
+                       validation: node.game.clueValidation,
                        oninput: function(res, input, that) {
                            that.validation(res, input);
                        }
@@ -702,7 +749,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 frame: 'studyboard.htm',
 
                 cb: function() {
-                    W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
+                    /*W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
                     W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
                     W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
                     W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
@@ -721,7 +768,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
                     W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
                     W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);
+                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);*/
+
+                    node.game.buildGrid('sbrd', this.roundCounter);
 
 
                     var that;//force proceed when clue is sent from other player
@@ -749,7 +798,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 frame: 'studyboardCG.htm',
                 cb: function() {
 
-                    W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
+                    /*W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
                     W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
                     W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
                     W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
@@ -768,11 +817,15 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
                     W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
                     W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);
+                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);*/
+
+                    node.game.buildGrid('sbrd', this.roundCounter);
 
 
-                    var that;//force proceed when guess is sent from other player
-                    if (this.guessesReceived !== null) node.done();
+                    var that;
+                    
+                    //force proceed when guess is sent from other player
+                    if (this.guessesReceived !== null) { node.done() };
                     that = this;
                     node.on.data('GUESSES', function(msg) { node.done();
                         that.guessesReceived = true;
@@ -787,7 +840,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 doneButton: false,
                 cb: function() {
 
-                    W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
+                    /*W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
                     W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
                     W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
                     W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
@@ -806,7 +859,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
                     W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
                     W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);
+                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);*/
+
+                    node.game.buildGrid('gbrd', this.roundCounter);
 
 
                     if(this.smallRoundCounter==0){//show clue given by other player
@@ -829,7 +884,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     }
 
                     var el = W.getElementById("gbrd");
-                    this.clicker = function (e){//add event listener to record button presses of game board
+                    /*this.clicker = function (e){//add event listener to record button presses of game board
                         var target = e.target;
                         var myDiv = W.getElementById("glist");
                         if(target.className.match("button button1")){
@@ -843,12 +898,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                             customTimeStamp: node.timer.getTimeSince('start')
                         });
                     }
-                    },
-                    el.addEventListener('click', this.clicker);//add event listener
+                    };*/
+
+                    el.addEventListener('click', node.game.guessClickHandler);//add event listener
                 },
                 done: function() {//send signal for other player to end step, removes event listener so that these values cannot change
                     var el = W.getElementById("gbrd");
-                    el.removeEventListener('click', this.clicker);
+                    el.removeEventListener('click', node.game.guessClickHandler);
                     node.say('GUESSES', node.game.partner);
                     var memArray = node.game.memory.select('GuessOptions').and('customTimeStamp','!in', this.optionTimeArray).fetch();
                     var i;
@@ -910,7 +966,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 frame: 'studyboardCG.htm',
                 cb: function() {
 
-                    W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
+                    /*W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
                     W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
                     W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
                     W.setInnerHTML('b3', node.game.settings.boardboard[this.roundCounter][3]);
@@ -929,15 +985,21 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
                     W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
                     W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);
+                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);*/
+
+                    node.game.buildGrid('sbrd', this.roundCounter);
 
 
-                    var that;//receives two messages, one for each guessed word. ends after receiving the second one
-                    if (this.guess2Received !== null) node.done();
+                    var that;
+                    
+                    //receives two messages, one for each guessed word. ends after receiving the second one
+                    if (this.guess2Received !== null) { node.done() };
+
                     that = this;
                     node.on.data('GUESS1', function(msg) {
                         that.guess1Received = msg.data;
                     });
+
                     node.on.data('GUESS2', function(msg) {
                         that.guess2Received = msg.data;
                         node.done();
@@ -948,7 +1010,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 frame: 'guessesboard.htm',
                 donebutton: false,
                 cb: function() {
-                    W.setInnerHTML('clue2', "Please select your FINAL guesses." ),
+                    /*W.setInnerHTML('clue2', "Please select your FINAL guesses." ),
                     W.setInnerHTML('b0', node.game.settings.boardboard[this.roundCounter][0]),
                     W.setInnerHTML('b1', node.game.settings.boardboard[this.roundCounter][1]);
                     W.setInnerHTML('b2', node.game.settings.boardboard[this.roundCounter][2]);
@@ -968,50 +1030,15 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     W.setInnerHTML('b16', node.game.settings.boardboard[this.roundCounter][16]);
                     W.setInnerHTML('b17', node.game.settings.boardboard[this.roundCounter][17]);
                     W.setInnerHTML('b18', node.game.settings.boardboard[this.roundCounter][18]);
-                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);
+                    W.setInnerHTML('b19', node.game.settings.boardboard[this.roundCounter][19]);*/
+
+                    node.game.buildGrid('gbrd', this.roundCounter);
 
                     this.answerCounter = 0;
 
                     var el = W.getElementById("gbrd");
 
-
-                    this.clicker2 = function (e){//event listener that receives two words and then ends the step
-                        var target = e.target;
-                        var myDiv = W.getElementById("alist");
-                        if(target.className.match("button button1")){
-
-                        if(myDiv.innerHTML == " Your final answers:  "){//the condition if no word has been added, stores the first word and sends it to the partner
-                            myDiv.innerHTML = myDiv.innerHTML+ target.innerHTML;
-                            node.say('GUESS1', node.game.partner, target.innerHTML);
-                            node.set({GUESS_1_FINAL : target.innerHTML});
-                            node.set({GUESS_1_FINAL_TIME : node.timer.getTimeSince('step')})
-                            node.game.memory.add({//adds the responded values to memory so we can access it later, cannot store this info in a variable since it is in an event listener
-                                player: node.player.id,
-                                stage: node.game.getCurrentGameStage(),
-                                Guess1: target.innerHTML
-                            });
-                            node.game.memory.tag("guess1");//tag this memory for easy access later
-
-                        }
-                        else if(!myDiv.innerHTML.includes(",")) {//the condition if 1 word has been added, stores the second word, send it to the partner, and ends the step for both players
-                            myDiv.innerHTML = myDiv.innerHTML + ", " + target.innerHTML;
-                            node.say('GUESS2', node.game.partner, target.innerHTML);
-                            node.set({GUESS_2_FINAL : target.innerHTML});
-                            node.set({GUESS_2_FINAL_TIME : node.timer.getTimeSince('step')})
-                            node.game.memory.add({
-                                player: node.player.id,
-                                stage: node.game.getCurrentGameStage(),
-                                Guess2: target.innerHTML
-                            });
-                            node.game.memory.tag("guess2");
-                            el.removeEventListener('click', this.clicker2);
-                            node.done();
-
-                        }
-                    }
-
-                    }
-                    el.addEventListener('click', this.clicker2);
+                    el.addEventListener('click', node.game.guessClickHandler2);
                 },
                 done: function() {
                     node.say('GUESS', node.game.partner);

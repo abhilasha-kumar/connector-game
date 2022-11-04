@@ -44,7 +44,7 @@ var board2 = ["PLANT","LACE","TIP","TENT","ARROW","POST","SUN","SILVER","ABOVE",
     "GOLD","STERN","CUP","WIND","BOWL","LUNCH","BELOW","BOW"];
 var board3 = ["MILD","SHINE","GRAY","GUMS","LUCK","PAPER","RUDE","LANE","HOLY","ROAD","JAM","HAMMER",
     "REGRET","CHIP","TEETH","FAIRY","TINY","TOOL","BULB","KIND"];
-var board4 = ["GUN","HALO","JUMP","GIVE","HOPE","TRAVEL","POORnode.game.settings","DREAM","SPOON","GLUE","ANGEL","WEAK",
+var board4 = ["GUN","HALO","JUMP","GIVE","HOPE","TRAVEL","POOR","DREAM","SPOON","GLUE","ANGEL","WEAK",
     "LEAP","CHIEF","ANKLE","PASTE","USUAL","BET","PATH","FORK"];
 var board5 = ["TIGER","EXAM","BUN","TRACE","HAND","STORM","SNAKE","ALARM","BEAR","HOUSE","BIRTH","TEST",
     "DEAD","FRESH","ALIVE","TOWER","PORK","ASH","LION","HELL"];
@@ -192,6 +192,7 @@ module.exports = {
 
     pairnumber: 33, // the number of pairs in the total experiment, should be 57
     pracpairnumber: 3,
+    BOARD_DIMENSIONS: {x: 5, y: 4},
 
     // # Treatments definition.
 
