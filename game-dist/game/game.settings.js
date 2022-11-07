@@ -190,8 +190,8 @@ module.exports = {
         pair39,pair40,pair41,pair42,pair43,pair44,pair45,pair46,pair47,pair48,pair49,pair50,pair51,
         pair52,pair53,pair54,pair55,pair56],
 
-    pairnumber: 33, // the number of pairs in the total experiment, should be 57
-    pracpairnumber: 3,
+    pairnumber: 2, // (33) the number of pairs in the total experiment, should be 57
+    pracpairnumber: 1, // 3
     BOARD_DIMENSIONS: {x: 5, y: 4},
 
     // # Treatments definition.
@@ -207,6 +207,11 @@ module.exports = {
         standard: {
             description: "Longer time",
             bidTime: 30000
+        },
+
+        testing: {
+            pairnumber: 2,
+            pracpairnumber: 1,
         },
 /*
         pressure: {

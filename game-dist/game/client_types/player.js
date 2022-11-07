@@ -206,7 +206,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         }
     });
 
-    stager.extendStep('clueFinalprac', {
+    const clueFinalStageParams = {
         role: function() { return this.role; },
         partner: function() { return this.partner; },
         roles: {
@@ -273,9 +273,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 },
             }
         }
-    });
+    };
 
-    stager.extendStep('guessOptionsprac', {
+    stager.extendStep('clueFinalprac', clueFinalStageParams);
+
+    const guessOptionsStepParams = {
         role: function() { return this.role; },
         partner: function() { return this.partner; },
         roles: {
@@ -384,9 +386,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 }
             }
         }
-    });
+    };
 
-    stager.extendStep('guessFinalprac', {
+    stager.extendStep('guessOptionsprac', guessOptionsStepParams);
+
+    const guessFinalStepParams = {
         role: function() { return this.role; },
         partner: function() { return this.partner; },
         roles: {
@@ -433,7 +437,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             }
         }
 
-    });
+    };
+
+    stager.extendStep('guessFinalprac', guessFinalStepParams);
 
     stager.extendStep('feedbackprac', {//tells each player whether the guesser was successful
         role: function() { return this.role; },
@@ -555,238 +561,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         }
     });
 
-    stager.extendStep('clueFinal', {
-        role: function() { return this.role; },
-        partner: function() { return this.partner; },
-        roles: {
-            CLUEGIVER:{
-                frame: 'clueboard.htm',
-                cb: function() {
-                    console.log('Loading clue board ...');
-                    W.setInnerHTML('containerbottom2', "Please type your FINAL clue below and click Done:"),
+    stager.extendStep('clueFinal', clueFinalStageParams);
 
-                    node.game.buildGrid('cbrd', this.roundCounter);
+    stager.extendStep('guessOptions', guessOptionsStepParams);
 
-                    W.setInnerHTML('trgtWords', node.game.settings.pairList[this.roundCounter][this.randomOrder] + 
-                        " and " + node.game.settings.pairList[this.roundCounter][1-this.randomOrder]);
-                    node.set({target1: node.game.settings.pairList[this.roundCounter][this.randomOrder]});
-                    node.set({target2: node.game.settings.pairList[this.roundCounter][1-this.randomOrder]});
-
-                    this.clueGive2 = node.widgets.append('CustomInput', W.gid('containerbottom2'), {//apend customInput widget with 1 mandatory input
-                       id: 'clueGive',
-                       //mainText: 'What is your final clue?',
-                       type: 'text',
-                       className: 'centered',
-                       root: 'cbrd',
-                       requiredChoice: true,
-                       validation: node.game.clueValidation,
-                       oninput: function(res, input, that) {
-                           that.validation(res, input);
-                       }
-                   });
-                },
-                done: function() {//send clue to other player and clue and time info to database
-                    console.log('Done, pushing clue to other player ...');
-                    this.cluespast.push(this.clueGive2.getValues().value);
-
-                    node.say('CLUE', node.game.partner, this.clueGive2.getValues().value);
-
-                    node.set({clueFinal : this.clueGive2.getValues().value});
-                    node.set({TBFinal : this.clueGive2.getValues().timeBegin});
-                    node.set({TEFinal : this.clueGive2.getValues().timeEnd});
-
-                    return;
-                }
-
-            },
-            GUESSER:{
-                init: function() {
-                    node.game.clueReceived = null;
-                },
-                donebutton: false,
-                frame: 'studyboard.htm',
-
-                cb: function() {
-
-                    node.game.buildGrid('sbrd', this.roundCounter);
-
-
-                    var that;//force proceed when clue is sent from other player
-                    if (this.clueReceived !== null) node.done();
-                    that = this;
-                    node.on.data('CLUE', function(msg) {
-                        that.clueReceived = msg.data;
-                        this.cluespast.push(that.clueReceived);
-                        node.done();
-                    });
-                },
-            }
-        }
-    });
-
-    stager.extendStep('guessOptions', {
-        role: function() { return this.role; },
-        partner: function() { return this.partner; },
-        roles: {
-            CLUEGIVER:{
-                init: function() {
-                    node.game.guessesReceived = null;
-                },
-                donebutton: false,
-                frame: 'studyboardCG.htm',
-                cb: function() {
-
-
-                    node.game.buildGrid('sbrd', this.roundCounter);
-
-
-                    var that;
-                    
-                    //force proceed when guess is sent from other player
-                    if (this.guessesReceived !== null) { node.done() };
-                    that = this;
-                    node.on.data('GUESSES', function(msg) { node.done();
-                        that.guessesReceived = true;
-                        node.done();
-                    });
-
-
-                }
-            },
-            GUESSER:{
-                frame: 'guessesboard.htm',
-                doneButton: false,
-                cb: function() {
-
-                    node.game.buildGrid('gbrd', this.roundCounter);
-
-
-                    if(this.smallRoundCounter==0){//show clue given by other player
-                        W.setInnerHTML('cluepasttxt', "Your first clue is ");
-                        W.setInnerHTML('cluepast', this.clueReceived + ".");
-                    }
-                    if(this.smallRoundCounter==1){
-                        W.setInnerHTML('cluepasttxt', "Your first clue was ");
-                        W.setInnerHTML('cluepast', this.cluespast[this.cluespast.length-2] + ".");
-                        W.setInnerHTML('cluepast0txt', "Your second clue is ");
-                        W.setInnerHTML('cluepast0', this.clueReceived + ".");
-                    }
-                    if(this.smallRoundCounter==2){
-                        W.setInnerHTML('cluepasttxt', "Your first clue was ");
-                        W.setInnerHTML('cluepast', this.cluespast[this.cluespast.length-3] + ".");
-                        W.setInnerHTML('cluepast0txt', "Your second clue was ");
-                        W.setInnerHTML('cluepast0', this.cluespast[this.cluespast.length-2] + ".");
-                        W.setInnerHTML('cluepast1txt', "Your third clue is ");
-                        W.setInnerHTML('cluepast1', this.clueReceived + ".");
-                    }
-
-                    var el = W.getElementById("gbrd");
-
-                    el.addEventListener('click', node.game.guessClickHandler);//add event listener
-                },
-                done: function() {//send signal for other player to end step, removes event listener so that these values cannot change
-                    var el = W.getElementById("gbrd");
-                    el.removeEventListener('click', node.game.guessClickHandler);
-                    node.say('GUESSES', node.game.partner);
-                    var memArray = node.game.memory.select('GuessOptions').and('customTimeStamp','!in', this.optionTimeArray).fetch();
-                    var i;
-
-                    for (i=0; i<memArray.length; i++) {//make into for loop with a bunch of if statements
-
-                        if(i == 0){
-                            node.set({GuessOption1 : memArray[i].GuessOptions});
-                            node.set({GUESS_OPTION1_TIME: memArray[i].GUESS_OPTIONS_TIME});
-                        }
-
-                        if(i == 1){
-                            node.set({GuessOption2 : memArray[i].GuessOptions});
-                            node.set({GUESS_OPTION2_TIME: memArray[i].GUESS_OPTIONS_TIME});
-                        }
-                        if(i == 2){
-                            node.set({GuessOption3 : memArray[i].GuessOptions});
-                            node.set({GUESS_OPTION3_TIME: memArray[i].GUESS_OPTIONS_TIME});
-                        }
-                        if(i == 3){
-                            node.set({GuessOption4 : memArray[i].GuessOptions});
-                            node.set({GUESS_OPTION4_TIME: memArray[i].GUESS_OPTIONS_TIME});
-                        }
-                        if(i == 4){
-                            node.set({GuessOption5 : memArray[i].GuessOptions});
-                            node.set({GUESS_OPTION5_TIME: memArray[i].GUESS_OPTIONS_TIME});
-                        }
-                        if(i == 5){
-                            node.set({GuessOption6 : memArray[i].GuessOptions});
-                            node.set({GUESS_OPTION6_TIME: memArray[i].GUESS_OPTIONS_TIME});
-                        }
-                        if(i == 6){
-                            node.set({GuessOption7 : memArray[i].GuessOptions});
-                            node.set({GUESS_OPTION7_TIME: memArray[i].GUESS_OPTIONS_TIME});
-                        }
-                        if(i == 7){
-                            node.set({GuessOption8 : memArray[i].GuessOptions});
-                            node.set({GUESS_OPTION8_TIME: memArray[i].GUESS_OPTIONS_TIME});
-                        }
-
-                        this.optionTimeArray.push(memArray[i].customTimeStamp);
-
-                    }
-                }
-            }
-        }
-    });
-
-    stager.extendStep('guessFinal', {
-        role: function() { return this.role; },
-        partner: function() { return this.partner; },
-        roles: {
-            CLUEGIVER:{
-                init: function() {
-                    node.game.guess1Received = null;
-                    node.game.guess2Received = null;
-                },
-                donebutton: false,
-                frame: 'studyboardCG.htm',
-                cb: function() {
-
-                    node.game.buildGrid('sbrd', this.roundCounter);
-
-
-                    var that;
-                    
-                    //receives two messages, one for each guessed word. ends after receiving the second one
-                    if (this.guess2Received !== null) { node.done() };
-
-                    that = this;
-                    node.on.data('GUESS1', function(msg) {
-                        that.guess1Received = msg.data;
-                    });
-
-                    node.on.data('GUESS2', function(msg) {
-                        that.guess2Received = msg.data;
-                        node.done();
-                    });
-                }
-            },
-            GUESSER:{
-                frame: 'guessesboard.htm',
-                donebutton: false,
-                cb: function() {
-
-                    node.game.buildGrid('gbrd', this.roundCounter);
-
-                    this.answerCounter = 0;
-
-                    var el = W.getElementById("gbrd");
-
-                    el.addEventListener('click', node.game.guessClickHandler2);
-                },
-                done: function() {
-                    node.say('GUESS', node.game.partner);
-                }
-            }
-        }
-
-    });
+    stager.extendStep('guessFinal', guessFinalStepParams);
 
     stager.extendStep('feedback', {//tells each player whether the guesser was successful
         role: function() { return this.role; },
