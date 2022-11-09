@@ -40,6 +40,7 @@ behavior.
 ### Build
 
 Using npm build script will copy to the ./dist directory
+* If this is the first time you pulled the code down, run: npm install (this will pull down any dependencies from package.json)
 * npm run build
 
 ### Deploy

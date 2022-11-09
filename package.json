@@ -9,8 +9,8 @@
         "copyfiles": "^2.4.1"
     },
     "scripts": {
-        "deploy": "npx copyfiles -u 1 game-dist/**/* ../nodegame-install/nodegame-v7.1.0/games/connector-game/ && npx copyfiles package.json ../nodegame-install/nodegame-v7.1.0/games/connector-game/",
-        "build":  "npx copyfiles -u 1 game-dist/**/* dist/connector-game/ && npx copyfiles package.json dist/connector-game/"
+        "deploy": "npx copyfiles -u 1 \"game-dist/**/*\" ../nodegame-install/nodegame-v7.1.0/games/connector-game/ && npx copyfiles package.json ../nodegame-install/nodegame-v7.1.0/games/connector-game/",
+        "build":  "npx copyfiles -u 1 \"game-dist/**/*\" dist/connector-game/ && npx copyfiles package.json dist/connector-game/"
 
     }
 }
